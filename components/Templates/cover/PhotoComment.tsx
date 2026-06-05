@@ -32,14 +32,13 @@ export function PhotoComment({ values }: Props) {
         overflow: 'hidden',
         boxShadow: '0px 0px 75px 0px rgba(0,0,0,0.5)',
       }}>
-        {/* Post header */}
-        <div style={{ padding: '24px 24px 16px 40px', background: 'white', borderBottom: '1.84px solid #e9ebee' }}>
+        {/* Post header — 구분선 없음 */}
+        <div style={{ padding: '24px 24px 16px 40px', background: 'white' }}>
           <div className="flex items-center" style={{ gap: 17, paddingTop: 16 }}>
-            {/* 채널 썸네일 */}
             <div style={{ width: 84, height: 84, borderRadius: 42, background: '#f0f0f0', overflow: 'hidden', flexShrink: 0 }}>
-              {values.channelThumbnail ? (
+              {values.channelThumbnail && (
                 <img src={values.channelThumbnail} alt="" className="w-full h-full object-cover" />
-              ) : null}
+              )}
             </div>
             <div>
               <p style={{
@@ -47,13 +46,13 @@ export function PhotoComment({ values }: Props) {
                 fontWeight: 600, fontSize: 29, color: '#222',
                 letterSpacing: '0.58px', margin: 0, lineHeight: 1.3,
               }}>
-                {values.channelName || '채널명'}
+                {values.channelName || 'Tech Industry'}
               </p>
               <p style={{
                 fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
                 fontWeight: 400, fontSize: 25, color: '#54545a', margin: 0,
               }}>
-                {values.timestamp || '방금 전'}
+                {values.timestamp || 'Ex-Amazon'}
               </p>
             </div>
           </div>
@@ -72,17 +71,20 @@ export function PhotoComment({ values }: Props) {
         </div>
 
         {/* 서브 텍스트 */}
-        {(values.subText || true) && (
-          <div style={{ padding: '0 40px 32px 40px', background: 'white' }}>
-            <p style={{
-              fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
-              fontWeight: 400, fontSize: 32, lineHeight: 1.4,
-              color: '#54545a', margin: 0, wordBreak: 'break-word',
-            }}>
-              {values.subText || 'All of the sudden everyone has a dentist appointment, or they got sick, or they have some other random thing, hahah.'}
-            </p>
-          </div>
-        )}
+        <div style={{ padding: '0 40px 24px 40px', background: 'white' }}>
+          <p style={{
+            fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
+            fontWeight: 400, fontSize: 32, lineHeight: 1.4,
+            color: '#54545a', margin: 0, wordBreak: 'break-word',
+          }}>
+            {values.subText || 'All of the sudden everyone has a dentist appointment, or they got sick, or they have some other random thing, hahah.'}
+          </p>
+        </div>
+
+        {/* Action 이미지 */}
+        <div style={{ padding: '0 40px 32px 40px', background: 'white' }}>
+          <img src="/assets/Action.png" alt="" style={{ height: 60, objectFit: 'contain' }} />
+        </div>
       </div>
     </div>
   )

@@ -47,24 +47,22 @@ export function PhotoText02({ values }: Props) {
           }}>
             {values.headline || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'}
           </p>
-          {/* 본문 — 최대 3줄 */}
-          {values.body && (
-            <p style={{
-              fontFamily: "'Rethink Sans', sans-serif",
-              fontWeight: 400,
-              fontSize: 32,
-              lineHeight: 1.2,
-              color: 'white',
-              letterSpacing: '-0.32px',
-              margin: 0,
-              display: '-webkit-box',
-              WebkitLineClamp: 3,
-              WebkitBoxOrient: 'vertical' as const,
-              overflow: 'hidden',
-            }}>
-              {values.body || 'Our new grading system triple-checks every route using first ascent reports, local consensus, and verified tick data.'}
-            </p>
-          )}
+          {/* 본문 — 최대 3줄, 항상 표시 */}
+          <p style={{
+            fontFamily: "'Rethink Sans', sans-serif",
+            fontWeight: 400,
+            fontSize: 32,
+            lineHeight: 1.2,
+            color: 'white',
+            letterSpacing: '-0.32px',
+            margin: 0,
+            display: '-webkit-box',
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: 'vertical' as const,
+            overflow: 'hidden',
+          }}>
+            {values.body || 'Our new grading system triple-checks every route using first ascent reports, local consensus, and verified tick data.'}
+          </p>
         </div>
         <div style={{ background: '#f44c4f', height: 431, width: 180, borderTopRightRadius: 48 }} />
       </div>
