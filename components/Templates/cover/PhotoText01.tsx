@@ -2,19 +2,12 @@ import { FieldValues } from '@/lib/types'
 
 interface Props { values: FieldValues }
 
-// [텍스트] → 빨간 하이라이트, 나머지 → 흰색 일반 텍스트
 function renderWithHighlight(text: string) {
-  const parts = text.split(/(\[.*?\])/g)
-  return parts.map((part, i) => {
-    if (part.startsWith('[') && part.endsWith(']')) {
-      return (
-        <span key={i} style={{ color: '#f44c4f' }}>
-          {part.slice(1, -1)}
-        </span>
-      )
-    }
-    return <span key={i}>{part}</span>
-  })
+  return text.split(/(\[.*?\])/g).map((part, i) =>
+    part.startsWith('[') && part.endsWith(']')
+      ? <span key={i} style={{ color: '#f44c4f' }}>{part.slice(1, -1)}</span>
+      : <span key={i}>{part}</span>
+  )
 }
 
 export function PhotoText01({ values }: Props) {
@@ -23,16 +16,16 @@ export function PhotoText01({ values }: Props) {
 
   return (
     <div className="relative" style={{ width: 1080, height: 1350, background: '#111' }}>
-      {/* Bottom image container */}
+      {/* Bottom image container — 이미지 없으면 샘플 이미지, 상단 기준 정렬 */}
       <div className="absolute overflow-hidden" style={{ left: 20, top: 546, width: 1040, height: 690, borderRadius: 24 }}>
-        {bg ? (
-          <img src={bg} alt="" className="w-full h-full object-cover" />
-        ) : (
-          <div className="w-full h-full bg-gray-700" />
-        )}
+        <img
+          src={bg || '/assets/sample_image.png'}
+          alt=""
+          style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }}
+        />
       </div>
 
-      {/* Title with partial highlight — [텍스트] 부분만 빨간 배경 */}
+      {/* Title */}
       <div className="absolute" style={{ left: 50, top: 56, width: 960 }}>
         <p style={{
           fontFamily: "'Rethink Sans', sans-serif",
@@ -57,6 +50,10 @@ export function PhotoText01({ values }: Props) {
         <img src="/assets/logo.png" alt="blind" style={{ height: 40, objectFit: 'contain' }} />
       </div>
 
+      {/* Arrow 우하단 */}
+      <div className="absolute" style={{ right: 30, bottom: 30 }}>
+        <img src="/assets/arrow.png" alt="" style={{ height: 60, objectFit: 'contain' }} />
+      </div>
     </div>
   )
 }

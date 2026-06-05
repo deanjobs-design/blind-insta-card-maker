@@ -5,11 +5,12 @@ interface Props { values: FieldValues }
 export function PhotoText02({ values }: Props) {
   return (
     <div className="relative overflow-hidden" style={{ width: 1080, height: 1350, background: '#111' }}>
-      {values.mainImage ? (
-        <img src={values.mainImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
-      ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-600 to-gray-900" />
-      )}
+      {/* 배경 이미지 — 없으면 샘플 */}
+      <img
+        src={values.mainImage || '/assets/sample_image.png'}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover"
+      />
 
       {/* Blind logo top-left */}
       <div className="absolute" style={{ top: 50, left: 49 }}>
@@ -47,7 +48,7 @@ export function PhotoText02({ values }: Props) {
           }}>
             {values.headline || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'}
           </p>
-          {/* 본문 — 최대 3줄, 항상 표시 */}
+          {/* 본문 — 최대 3줄 */}
           <p style={{
             fontFamily: "'Rethink Sans', sans-serif",
             fontWeight: 400,
@@ -69,6 +70,10 @@ export function PhotoText02({ values }: Props) {
         </div>
       </div>
 
+      {/* Arrow 우하단 */}
+      <div className="absolute" style={{ right: 30, bottom: 30 }}>
+        <img src="/assets/arrow.png" alt="" style={{ height: 60, objectFit: 'contain' }} />
+      </div>
     </div>
   )
 }

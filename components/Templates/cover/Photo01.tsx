@@ -8,11 +8,11 @@ export function Photo01({ values }: Props) {
   return (
     <div className="relative overflow-hidden" style={{ width: 1080, height: 1350, background: '#111' }}>
       {/* Background image */}
-      {values.mainImage ? (
-        <img src={values.mainImage} alt="" className="absolute inset-0 w-full h-full object-cover" />
-      ) : (
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-700 to-gray-900" />
-      )}
+      <img
+        src={values.mainImage || '/assets/sample_image.png'}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover"
+      />
 
       {/* Blind logo top-left */}
       <div className="absolute" style={{ top: 50, left: 49 }}>
