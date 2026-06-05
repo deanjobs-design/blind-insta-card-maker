@@ -38,19 +38,27 @@ export function PreviewPanel({ templateId, values }: Props) {
     )
   }
 
+  const scaledH = CARD_H * scale
+  const scaledW = CARD_W * scale
+
   return (
-    <div ref={containerRef} className="bg-gray-100 rounded-xl shadow-sm flex items-center justify-center overflow-hidden h-full">
-      <div
-        style={{
-          transform: `scale(${scale})`,
-          transformOrigin: 'top center',
-          width: CARD_W,
-          height: CARD_H,
-          flexShrink: 0,
-        }}
-      >
-        <div data-card-preview="true">
-          <TemplateRenderer templateId={templateId} values={values} />
+    <div ref={containerRef} className="bg-gray-100 rounded-xl shadow-sm overflow-hidden h-full flex items-center justify-center">
+      {/* Wrapper sized to the scaled card so centering works correctly */}
+      <div style={{ width: scaledW, height: scaledH, flexShrink: 0, position: 'relative' }}>
+        <div
+          style={{
+            transform: `scale(${scale})`,
+            transformOrigin: 'top left',
+            width: CARD_W,
+            height: CARD_H,
+            position: 'absolute',
+            top: 0,
+            left: 0,
+          }}
+        >
+          <div data-card-preview="true">
+            <TemplateRenderer templateId={templateId} values={values} />
+          </div>
         </div>
       </div>
     </div>

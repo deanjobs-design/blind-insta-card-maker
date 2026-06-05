@@ -1,6 +1,5 @@
 'use client'
 import { useState } from 'react'
-import { Tabs } from '@/components/ui/Tabs'
 import { getSectionTemplates } from '@/lib/templateConfig'
 import { TemplateConfig } from '@/lib/types'
 
@@ -21,21 +20,34 @@ export function TemplateSelector({ selectedId, onSelect }: Props) {
   const templates = getSectionTemplates(activeSection as TemplateConfig['section'])
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-4">
-      <Tabs
-        tabs={SECTION_TABS.map(t => ({ id: t.id, label: t.label }))}
-        activeTab={activeSection}
-        onChange={setActiveSection}
-      />
-      <div className="grid grid-cols-3 gap-3 mt-4">
+    <div className="bg-white border-b border-gray-200 px-6 py-0 flex-shrink-0">
+      {/* Section tabs */}
+      <div className="flex gap-0 border-b border-gray-100">
+        {SECTION_TABS.map(tab => (
+          <button
+            key={tab.id}
+            onClick={() => setActiveSection(tab.id)}
+            className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
+              activeSection === tab.id
+                ? 'border-blue-600 text-blue-600'
+                : 'border-transparent text-gray-500 hover:text-gray-700'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </div>
+
+      {/* Template chips — horizontal scroll */}
+      <div className="flex gap-2 py-2 overflow-x-auto" style={{ scrollbarWidth: 'none' }}>
         {templates.map(t => (
           <button
             key={t.id}
             onClick={() => onSelect(t)}
-            className={`aspect-[4/5] rounded-lg border-2 transition-all text-xs font-medium flex items-center justify-center ${
+            className={`flex-shrink-0 px-4 py-2 rounded-lg border-2 text-xs font-medium transition-all whitespace-nowrap ${
               selectedId === t.id
                 ? 'border-blue-500 bg-blue-50 text-blue-700'
-                : 'border-gray-200 hover:border-gray-300 text-gray-500'
+                : 'border-gray-200 bg-gray-50 hover:border-gray-300 text-gray-600'
             }`}
           >
             {t.name}

@@ -66,35 +66,41 @@ export default function Home() {
   }, [cardSet])
 
   return (
-    <main className="min-h-screen bg-gray-100">
-      <header className="bg-white border-b border-gray-200 px-8 py-4">
+    <main className="flex flex-col bg-gray-100 overflow-hidden" style={{ height: '100dvh' }}>
+      {/* Header */}
+      <header className="bg-white border-b border-gray-200 px-8 py-4 flex-shrink-0">
         <h1 className="text-xl font-bold text-gray-900">블라인드 카드 메이커</h1>
       </header>
 
-      <div className="flex flex-col gap-4 p-6 max-w-7xl mx-auto" style={{ height: 'calc(100vh - 64px)' }}>
-        <TemplateSelector
-          selectedId={selectedTemplate?.id ?? ''}
-          onSelect={handleTemplateSelect}
-        />
+      {/* Template selector — compact horizontal strip, never grows */}
+      <TemplateSelector
+        selectedId={selectedTemplate?.id ?? ''}
+        onSelect={handleTemplateSelect}
+      />
 
-        <div className="flex gap-4 flex-1 min-h-0">
-          <div className="w-80 flex-shrink-0 overflow-y-auto">
-            <InputPanel
-              template={selectedTemplate}
-              values={fieldValues}
-              onChange={handleFieldChange}
-              onAddToSet={handleAddToSet}
-            />
-          </div>
-
-          <div className="flex-1">
-            <PreviewPanel
-              templateId={selectedTemplate?.id ?? null}
-              values={fieldValues}
-            />
-          </div>
+      {/* Editor — takes all remaining space */}
+      <div className="flex gap-4 flex-1 min-h-0 p-4">
+        {/* Input form */}
+        <div className="w-72 flex-shrink-0 min-h-0 overflow-y-auto">
+          <InputPanel
+            template={selectedTemplate}
+            values={fieldValues}
+            onChange={handleFieldChange}
+            onAddToSet={handleAddToSet}
+          />
         </div>
 
+        {/* Card preview */}
+        <div className="flex-1 min-h-0 min-w-0">
+          <PreviewPanel
+            templateId={selectedTemplate?.id ?? null}
+            values={fieldValues}
+          />
+        </div>
+      </div>
+
+      {/* Download bar */}
+      <div className="flex-shrink-0 px-4 pb-4">
         <DownloadBar
           cards={cardSet}
           onRemove={handleRemoveFromSet}
