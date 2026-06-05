@@ -1,9 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest'
 
-vi.mock('html2canvas', () => ({
-  default: vi.fn().mockResolvedValue({
-    toDataURL: vi.fn().mockReturnValue('data:image/png;base64,abc123'),
-  }),
+vi.mock('html-to-image', () => ({
+  toPng: vi.fn().mockResolvedValue('data:image/png;base64,abc123'),
 }))
 
 import { captureCard } from '@/lib/exportCard'
@@ -17,7 +15,7 @@ describe('captureCard', () => {
     document.body.appendChild(el)
   })
 
-  it('html2canvas를 호출하고 dataURL 문자열을 반환한다', async () => {
+  it('toPng를 호출하고 dataURL 문자열을 반환한다', async () => {
     const result = await captureCard(el)
     expect(result).toBe('data:image/png;base64,abc123')
   })
