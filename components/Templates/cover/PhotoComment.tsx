@@ -72,14 +72,14 @@ export function PhotoComment({ values }: Props) {
         </div>
 
         {/* 서브 텍스트 */}
-        {values.subText && (
+        {(values.subText || true) && (
           <div style={{ padding: '0 40px 32px 40px', background: 'white' }}>
             <p style={{
               fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
               fontWeight: 400, fontSize: 32, lineHeight: 1.4,
               color: '#54545a', margin: 0, wordBreak: 'break-word',
             }}>
-              {values.subText}
+              {values.subText || 'All of the sudden everyone has a dentist appointment, or they got sick, or they have some other random thing, hahah.'}
             </p>
           </div>
         )}

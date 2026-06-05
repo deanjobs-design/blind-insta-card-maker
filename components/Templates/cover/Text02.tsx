@@ -41,8 +41,8 @@ export function Text02({ values }: Props) {
         </p>
       </div>
 
-      {/* 편집: 채널 정보 (좌하단) */}
-      <div className="absolute flex items-center" style={{ left: 80, bottom: 176, gap: 20 }}>
+      {/* 편집: 채널 정보 — 하단에서 80pt 위 */}
+      <div className="absolute flex items-center" style={{ left: 80, bottom: 80, gap: 20 }}>
         <div style={{
           width: 96, height: 96, borderRadius: 48,
           overflow: 'hidden', background: 'rgba(255,255,255,0.2)', flexShrink: 0,
@@ -57,14 +57,14 @@ export function Text02({ values }: Props) {
             fontWeight: 600, fontSize: 38, color: 'white',
             letterSpacing: '0.76px', margin: 0, lineHeight: 1.2,
           }}>
-            {values.channelName || '채널명'}
+            {values.channelName || 'Tech Industry'}
           </p>
           <p style={{
             fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
             fontWeight: 400, fontSize: 30, color: '#bec1c5',
             letterSpacing: '0.6px', margin: 0,
           }}>
-            {values.occupation || '직책/소속'}
+            {values.occupation || 'Ex-Amazon'}
           </p>
         </div>
       </div>

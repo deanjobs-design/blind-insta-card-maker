@@ -26,7 +26,11 @@ export function TemplateSelector({ selectedId, onSelect }: Props) {
         {SECTION_TABS.map(tab => (
           <button
             key={tab.id}
-            onClick={() => setActiveSection(tab.id)}
+            onClick={() => {
+              setActiveSection(tab.id)
+              const first = getSectionTemplates(tab.id as TemplateConfig['section'])[0]
+              if (first) onSelect(first)
+            }}
             className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
               activeSection === tab.id
                 ? 'border-blue-600 text-blue-600'

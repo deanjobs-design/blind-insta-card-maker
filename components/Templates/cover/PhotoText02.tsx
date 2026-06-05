@@ -62,7 +62,7 @@ export function PhotoText02({ values }: Props) {
               WebkitBoxOrient: 'vertical' as const,
               overflow: 'hidden',
             }}>
-              {values.body}
+              {values.body || 'Our new grading system triple-checks every route using first ascent reports, local consensus, and verified tick data.'}
             </p>
           )}
         </div>
