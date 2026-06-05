@@ -37,7 +37,7 @@ export function Text02({ values }: Props) {
             whiteSpace: 'pre-wrap',
           }}
         >
-          {values.quote || '인용구를 입력하세요'}
+          {values.quote || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'}
         </p>
       </div>
 

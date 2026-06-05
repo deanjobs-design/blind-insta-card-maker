@@ -36,7 +36,7 @@ export function Photo02({ values }: Props) {
           wordBreak: 'break-word',
           flex: 1,
         }}>
-          {values.headline || '헤드라인 텍스트를 입력하세요'}
+          {values.headline || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'}
         </p>
       </div>
 

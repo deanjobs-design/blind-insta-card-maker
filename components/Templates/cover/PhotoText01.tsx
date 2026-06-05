@@ -28,7 +28,7 @@ export function PhotoText01({ values }: Props) {
         margin: 0,
         wordBreak: 'break-word',
       }}>
-        {values.title || '타이틀 텍스트를 입력하세요'}
+        {values.title || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'}
       </p>
 
       {/* Blind logo bottom-left */}

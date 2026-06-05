@@ -40,7 +40,7 @@ export function PhotoText02({ values }: Props) {
             margin: 0,
             wordBreak: 'break-word',
           }}>
-            {values.headline || '헤드라인 텍스트'}
+            {values.headline || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'}
           </p>
           {values.body && (
             <p style={{

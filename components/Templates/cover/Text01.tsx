@@ -34,7 +34,7 @@ export function Text01({ values }: Props) {
             whiteSpace: 'pre-wrap',
           }}
         >
-          {values.announcement || '텍스트를 입력하세요'}
+          {values.announcement || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'}
         </p>
       </div>
     </div>

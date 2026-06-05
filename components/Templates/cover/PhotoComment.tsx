@@ -79,7 +79,7 @@ export function PhotoComment({ values }: Props) {
             margin: 0,
             wordBreak: 'break-word',
           }}>
-            {values.postBody || '게시물 본문 내용이 여기에 표시됩니다.'}
+            {values.postBody || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'}
           </p>
         </div>
       </div>
