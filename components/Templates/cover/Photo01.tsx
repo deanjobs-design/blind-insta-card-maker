@@ -3,6 +3,8 @@ import { FieldValues } from '@/lib/types'
 interface Props { values: FieldValues }
 
 export function Photo01({ values }: Props) {
+  const text = values.headline || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'
+
   return (
     <div className="relative overflow-hidden" style={{ width: 1080, height: 1350, background: '#111' }}>
       {/* Background image */}
@@ -23,33 +25,29 @@ export function Photo01({ values }: Props) {
         background: 'linear-gradient(to top, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0) 100%)',
       }} />
 
-      {/* Headline pill box */}
-      <div className="absolute left-0 right-0 flex items-end justify-center" style={{ bottom: 0, paddingBottom: 140, paddingLeft: 40, paddingRight: 40, paddingTop: 24 }}>
-        <div style={{
-          background: '#f44c4f',
-          borderRadius: '12px 54px 54px 12px',
-          paddingLeft: 64,
-          paddingRight: 64,
-          paddingTop: 40,
-          paddingBottom: 40,
-          flex: 1,
+      {/* Per-line highlight headline — bottom area */}
+      <div className="absolute" style={{ left: 40, right: 40, bottom: 140 }}>
+        {/* box-decoration-break: clone 으로 줄마다 배경색 */}
+        <p style={{
+          fontFamily: "'Rethink Sans', sans-serif",
+          fontWeight: 600,
+          fontSize: 100,
+          lineHeight: 1.4,
+          color: 'white',
+          letterSpacing: '-3px',
+          margin: 0,
+          wordBreak: 'break-word',
         }}>
-          <p style={{
-            fontFamily: "'Rethink Sans', sans-serif",
-            fontWeight: 600,
-            fontSize: 100,
-            lineHeight: 1.05,
-            color: 'white',
-            letterSpacing: '-3px',
-            margin: 0,
-            wordBreak: 'break-word',
-          }}>
-            {values.headline || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'}
-          </p>
-        </div>
+          <span style={{
+            background: '#f44c4f',
+            padding: '2px 20px 4px 20px',
+            boxDecorationBreak: 'clone',
+            WebkitBoxDecorationBreak: 'clone',
+          } as React.CSSProperties}>
+            {text}
+          </span>
+        </p>
       </div>
-
-
     </div>
   )
 }

@@ -16,8 +16,8 @@ export function PhotoText02({ values }: Props) {
         <img src="/assets/logo.png" alt="blind" style={{ height: 40, objectFit: 'contain' }} />
       </div>
 
-      {/* Red content box */}
-      <div className="absolute left-0 flex items-end justify-between" style={{ top: 764, width: 1080 }}>
+      {/* Red content box — bottom 고정 */}
+      <div className="absolute left-0 flex items-end justify-between" style={{ bottom: 0, width: 1080 }}>
         <div style={{
           background: '#f44c4f',
           borderTopRightRadius: 48,

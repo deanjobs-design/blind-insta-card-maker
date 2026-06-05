@@ -2,11 +2,33 @@ import { FieldValues } from '@/lib/types'
 
 interface Props { values: FieldValues }
 
+// [텍스트] → 빨간 하이라이트, 나머지 → 흰색 일반 텍스트
+function renderWithHighlight(text: string) {
+  const parts = text.split(/(\[.*?\])/g)
+  return parts.map((part, i) => {
+    if (part.startsWith('[') && part.endsWith(']')) {
+      return (
+        <span key={i} style={{
+          background: '#f44c4f',
+          padding: '2px 12px 4px 12px',
+          boxDecorationBreak: 'clone',
+          WebkitBoxDecorationBreak: 'clone',
+        } as React.CSSProperties}>
+          {part.slice(1, -1)}
+        </span>
+      )
+    }
+    return <span key={i}>{part}</span>
+  })
+}
+
 export function PhotoText01({ values }: Props) {
   const bg = values.mainImage || values.sectionImage
+  const text = values.title || '2026 Meta hire to fire: [All areas] have minimum 10% cuts at Meta'
+
   return (
     <div className="relative" style={{ width: 1080, height: 1350, background: '#111' }}>
-      {/* Bottom image container — 공유 배경 이미지 */}
+      {/* Bottom image container */}
       <div className="absolute overflow-hidden" style={{ left: 20, top: 546, width: 1040, height: 690, borderRadius: 24 }}>
         {bg ? (
           <img src={bg} alt="" className="w-full h-full object-cover" />
@@ -15,22 +37,21 @@ export function PhotoText01({ values }: Props) {
         )}
       </div>
 
-      {/* Large title */}
-      <p className="absolute" style={{
-        fontFamily: "'Rethink Sans', sans-serif",
-        fontWeight: 600,
-        fontSize: 110,
-        lineHeight: 1.05,
-        color: 'white',
-        letterSpacing: '-3.3px',
-        left: 50,
-        top: 56,
-        width: 960,
-        margin: 0,
-        wordBreak: 'break-word',
-      }}>
-        {values.title || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'}
-      </p>
+      {/* Title with partial highlight — [텍스트] 부분만 빨간 배경 */}
+      <div className="absolute" style={{ left: 50, top: 56, width: 960 }}>
+        <p style={{
+          fontFamily: "'Rethink Sans', sans-serif",
+          fontWeight: 600,
+          fontSize: 110,
+          lineHeight: 1.4,
+          color: 'white',
+          letterSpacing: '-3.3px',
+          margin: 0,
+          wordBreak: 'break-word',
+        }}>
+          {renderWithHighlight(text)}
+        </p>
+      </div>
 
       {/* Blind logo bottom-left */}
       <div className="absolute" style={{ left: 24, bottom: 30 }}>

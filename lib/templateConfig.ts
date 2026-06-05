@@ -34,7 +34,7 @@ export const TEMPLATES: TemplateConfig[] = [
     name: '사진+텍스트형 A',
     section: 'cover',
     fields: [
-      textareaField('title', '타이틀', '큰 타이틀 텍스트'),
+      textareaField('title', '타이틀 ([텍스트] = 하이라이트)', '[하이라이트할 부분]을 대괄호로 감싸세요'),
       imageField('sectionImage', '하단 이미지'),
     ],
   },
