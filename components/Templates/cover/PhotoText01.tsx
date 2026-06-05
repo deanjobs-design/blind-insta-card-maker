@@ -8,12 +8,7 @@ function renderWithHighlight(text: string) {
   return parts.map((part, i) => {
     if (part.startsWith('[') && part.endsWith(']')) {
       return (
-        <span key={i} style={{
-          background: '#f44c4f',
-          padding: '2px 12px 4px 12px',
-          boxDecorationBreak: 'clone',
-          WebkitBoxDecorationBreak: 'clone',
-        } as React.CSSProperties}>
+        <span key={i} style={{ color: '#f44c4f' }}>
           {part.slice(1, -1)}
         </span>
       )

@@ -26,7 +26,7 @@ export function Photo01({ values }: Props) {
       }} />
 
       {/* Per-line highlight headline — bottom area */}
-      <div className="absolute" style={{ left: 40, right: 40, bottom: 140 }}>
+      <div className="absolute" style={{ left: 40, right: 40, bottom: 80 }}>
         {/* box-decoration-break: clone 으로 줄마다 배경색 */}
         <p style={{
           fontFamily: "'Rethink Sans', sans-serif",
@@ -40,7 +40,8 @@ export function Photo01({ values }: Props) {
         }}>
           <span style={{
             background: '#f44c4f',
-            padding: '2px 20px 4px 20px',
+            padding: '2px 20px 6px 20px',
+            borderRadius: 24,
             boxDecorationBreak: 'clone',
             WebkitBoxDecorationBreak: 'clone',
           } as React.CSSProperties}>

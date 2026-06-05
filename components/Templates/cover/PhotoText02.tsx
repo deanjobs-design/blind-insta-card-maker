@@ -64,7 +64,7 @@ export function PhotoText02({ values }: Props) {
             {values.body || 'Our new grading system triple-checks every route using first ascent reports, local consensus, and verified tick data.'}
           </p>
         </div>
-        <div style={{ background: '#f44c4f', height: 431, width: 180, borderTopRightRadius: 48 }} />
+        <div style={{ background: '#f44c4f', alignSelf: 'stretch', width: 180, borderTopRightRadius: 48 }} />
       </div>
 
       {/* Corner logo bottom-right */}
