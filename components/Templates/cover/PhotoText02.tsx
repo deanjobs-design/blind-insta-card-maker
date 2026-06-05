@@ -72,7 +72,7 @@ export function PhotoText02({ values }: Props) {
 
       {/* Arrow 우하단 */}
       <div className="absolute" style={{ right: 30, bottom: 30 }}>
-        <img src="/assets/arrow.png" alt="" style={{ height: 60, objectFit: 'contain' }} />
+        <img src="/assets/arrow.png" alt="" style={{ width: 96, height: 96 }} />
       </div>
     </div>
   )
