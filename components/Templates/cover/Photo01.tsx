@@ -49,10 +49,7 @@ export function Photo01({ values }: Props) {
         </div>
       </div>
 
-      {/* Company logo bottom-right */}
-      <div className="absolute" style={{ bottom: 10, right: 10 }}>
-        <img src="/assets/logo.png" alt="" style={{ width: 110, height: 110, objectFit: 'contain' }} />
-      </div>
+
     </div>
   )
 }
