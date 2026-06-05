@@ -26,7 +26,7 @@ export function Photo01({ values }: Props) {
       }} />
 
       {/* Per-line highlight headline — bottom area */}
-      <div className="absolute" style={{ left: 40, right: 40, bottom: 80 }}>
+      <div className="absolute" style={{ left: 40, right: 40, bottom: 100 }}>
         {/* box-decoration-break: clone 으로 줄마다 배경색 */}
         <p style={{
           fontFamily: "'Rethink Sans', sans-serif",

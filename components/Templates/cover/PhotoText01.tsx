@@ -38,11 +38,15 @@ export function PhotoText01({ values }: Props) {
           fontFamily: "'Rethink Sans', sans-serif",
           fontWeight: 600,
           fontSize: 110,
-          lineHeight: 1.4,
+          lineHeight: 1.0,
           color: 'white',
           letterSpacing: '-3.3px',
           margin: 0,
           wordBreak: 'break-word',
+          display: '-webkit-box',
+          WebkitLineClamp: 4,
+          WebkitBoxOrient: 'vertical' as const,
+          overflow: 'hidden',
         }}>
           {renderWithHighlight(text)}
         </p>
