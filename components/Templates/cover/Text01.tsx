@@ -4,21 +4,30 @@ interface Props { values: FieldValues }
 
 export function Text01({ values }: Props) {
   return (
-    <div
-      className="relative bg-white"
-      style={{ width: 1080, height: 1350 }}
-    >
-      <div className="px-16 pt-16">
-        <img src="/assets/logo.png" alt="blind" className="h-16 object-contain" />
-        <div
-          className="mt-24 text-gray-900 font-semibold leading-relaxed"
-          style={{ fontSize: 52, lineHeight: 1.45 }}
-        >
-          {values.announcement || '공지 텍스트를 입력하세요'}
+    <div className="relative" style={{ width: 1080, height: 1350, background: '#111' }}>
+      <div className="absolute" style={{ left: 64, top: 64, display: 'flex', flexDirection: 'column', gap: 40, width: 952 }}>
+        {/* Blind logo */}
+        <div style={{ height: 64 }}>
+          <img src="/assets/logo.png" alt="blind" style={{ height: 64, objectFit: 'contain' }} />
         </div>
+
+        {/* Main text */}
+        <p style={{
+          fontFamily: "'Rethink Sans', sans-serif",
+          fontWeight: 700,
+          fontSize: 145,
+          lineHeight: 1.05,
+          color: 'white',
+          letterSpacing: '-4.35px',
+          margin: 0,
+          wordBreak: 'break-word',
+        }}>
+          {values.announcement || '공지 텍스트를 입력하세요'}
+        </p>
       </div>
-      <div className="absolute bottom-6 right-8">
-        <img src="/assets/logo.png" alt="blind" className="h-10 object-contain" />
+
+      <div className="absolute" style={{ bottom: 10, right: 10 }}>
+        <img src="/assets/logo.png" alt="" style={{ width: 110, height: 110, objectFit: 'contain' }} />
       </div>
     </div>
   )

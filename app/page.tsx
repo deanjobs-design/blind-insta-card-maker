@@ -8,9 +8,10 @@ import { CardSetRenderer } from '@/components/Editor/CardSetRenderer'
 import { TemplateConfig, FieldValues, CardItem } from '@/lib/types'
 import { captureCard } from '@/lib/exportCard'
 import { downloadZip } from '@/lib/createZip'
+import { getTemplate } from '@/lib/templateConfig'
 
 export default function Home() {
-  const [selectedTemplate, setSelectedTemplate] = useState<TemplateConfig | null>(null)
+  const [selectedTemplate, setSelectedTemplate] = useState<TemplateConfig | null>(getTemplate('photo_01') ?? null)
   const [fieldValues, setFieldValues] = useState<FieldValues>({})
   const [cardSet, setCardSet] = useState<CardItem[]>([])
   const [isDownloading, setIsDownloading] = useState(false)
@@ -46,7 +47,7 @@ export default function Home() {
     if (!renderRef.current || cardSet.length === 0) return
     setIsDownloading(true)
     try {
-      const entries = []
+      const entries: { filename: string; dataUrl: string }[] = []
       const cardEls = renderRef.current.querySelectorAll('[data-card-id]')
       for (let i = 0; i < cardEls.length; i++) {
         const el = cardEls[i] as HTMLElement
