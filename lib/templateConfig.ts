@@ -106,9 +106,7 @@ export const TEMPLATES: TemplateConfig[] = [
     id: 'last_page',
     name: '마지막 페이지',
     section: 'last_page',
-    fields: [
-      textareaField('ctaText', 'CTA 텍스트', 'Follow us for more breaking news and stories!'),
-    ],
+    fields: [],
   },
 ]
 

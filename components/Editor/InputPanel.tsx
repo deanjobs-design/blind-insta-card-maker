@@ -29,6 +29,11 @@ export function InputPanel({ template, values, onChange, onAddToSet }: Props) {
   return (
     <div className="bg-white rounded-xl shadow-sm p-6 flex flex-col gap-5">
       <h2 className="text-base font-semibold text-gray-800">{template.name}</h2>
+      {template.fields.length === 0 && (
+        <p className="text-sm text-gray-400">
+          이 템플릿은 고정 이미지입니다. 그대로 세트에 추가하세요.
+        </p>
+      )}
       {template.fields.map(field => (
         <div key={field.key} className="flex flex-col gap-1">
           <label className="text-sm font-medium text-gray-700">{field.label}</label>
