@@ -57,10 +57,6 @@ export function PhotoText01({ values }: Props) {
         <img src="/assets/logo.png" alt="blind" style={{ height: 40, objectFit: 'contain' }} />
       </div>
 
-      {/* Corner logo bottom-right */}
-      <div className="absolute" style={{ bottom: 0, right: 0 }}>
-        <img src="/assets/corner_logo.png" alt="" style={{ width: 110, height: 110 }} />
-      </div>
     </div>
   )
 }

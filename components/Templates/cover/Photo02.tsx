@@ -2,7 +2,17 @@ import { FieldValues } from '@/lib/types'
 
 interface Props { values: FieldValues }
 
+function renderRed(text: string) {
+  return text.split(/(\[.*?\])/g).map((part, i) =>
+    part.startsWith('[') && part.endsWith(']')
+      ? <span key={i} style={{ color: '#f44c4f' }}>{part.slice(1, -1)}</span>
+      : <span key={i}>{part}</span>
+  )
+}
+
 export function Photo02({ values }: Props) {
+  const text = values.headline || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'
+
   return (
     <div className="relative overflow-hidden" style={{ width: 1080, height: 1350, background: '#111' }}>
       {values.mainImage ? (
@@ -36,11 +46,9 @@ export function Photo02({ values }: Props) {
           wordBreak: 'break-word',
           flex: 1,
         }}>
-          {values.headline || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'}
+          {renderRed(text)}
         </p>
       </div>
-
-
     </div>
   )
 }

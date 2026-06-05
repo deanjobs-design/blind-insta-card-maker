@@ -69,10 +69,6 @@ export function PhotoText02({ values }: Props) {
         </div>
       </div>
 
-      {/* Corner logo bottom-right */}
-      <div className="absolute" style={{ bottom: 0, right: 0 }}>
-        <img src="/assets/corner_logo.png" alt="" style={{ width: 110, height: 110 }} />
-      </div>
     </div>
   )
 }
