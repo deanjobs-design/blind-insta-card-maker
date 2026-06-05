@@ -15,15 +15,22 @@ export default function Home() {
   const [fieldValues, setFieldValues] = useState<FieldValues>({})
   const [cardSet, setCardSet] = useState<CardItem[]>([])
   const [isDownloading, setIsDownloading] = useState(false)
+  // 표지 섹션 공유 배경 이미지 — 어느 표지 템플릿에서 업로드해도 전체 적용
+  const [sharedCoverImage, setSharedCoverImage] = useState<string>('')
   const renderRef = useRef<HTMLDivElement>(null)
 
   const handleTemplateSelect = useCallback((t: TemplateConfig) => {
     setSelectedTemplate(t)
-    setFieldValues({})
-  }, [])
+    // 표지 템플릿으로 전환 시 공유 배경 이미지 유지
+    setFieldValues(t.section === 'cover' && sharedCoverImage ? { mainImage: sharedCoverImage } : {})
+  }, [sharedCoverImage])
 
   const handleFieldChange = useCallback((key: string, value: string) => {
     setFieldValues(prev => ({ ...prev, [key]: value }))
+    // 배경 이미지 업로드 시 표지 공유 상태에도 저장
+    if (key === 'mainImage' || key === 'sectionImage') {
+      setSharedCoverImage(value)
+    }
   }, [])
 
   const handleAddToSet = useCallback(() => {
