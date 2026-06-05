@@ -5,29 +5,37 @@ interface Props { values: FieldValues }
 export function Text01({ values }: Props) {
   return (
     <div className="relative" style={{ width: 1080, height: 1350, background: '#111' }}>
-      <div className="absolute" style={{ left: 64, top: 64, display: 'flex', flexDirection: 'column', gap: 40, width: 952 }}>
-        {/* Blind logo */}
-        <div style={{ height: 64 }}>
-          <img src="/assets/logo.png" alt="blind" style={{ height: 64, objectFit: 'contain' }} />
-        </div>
-
-        {/* Main text */}
-        <p style={{
-          fontFamily: "'Rethink Sans', sans-serif",
-          fontWeight: 700,
-          fontSize: 145,
-          lineHeight: 1.05,
-          color: 'white',
-          letterSpacing: '-4.35px',
-          margin: 0,
-          wordBreak: 'break-word',
-        }}>
-          {values.announcement || '공지 텍스트를 입력하세요'}
-        </p>
+      {/* 고정: Blind 로고 좌상단 */}
+      <div className="absolute" style={{ left: 64, top: 64 }}>
+        <img
+          src="/assets/text01_logo.png"
+          alt="blind"
+          style={{ height: 64, width: 'auto', objectFit: 'contain' }}
+        />
       </div>
 
-      <div className="absolute" style={{ bottom: 10, right: 10 }}>
-        <img src="/assets/logo.png" alt="" style={{ width: 110, height: 110, objectFit: 'contain' }} />
+      {/* 고정: 코너 로고 우하단 */}
+      <div className="absolute" style={{ right: 0, bottom: 0 }}>
+        <img src="/assets/corner_logo.png" alt="" style={{ width: 110, height: 110 }} />
+      </div>
+
+      {/* 편집: 본문 텍스트 */}
+      <div className="absolute" style={{ left: 64, top: 168, width: 952 }}>
+        <p
+          style={{
+            fontFamily: "'Rethink Sans', sans-serif",
+            fontWeight: 700,
+            fontSize: 145,
+            lineHeight: 1.05,
+            color: 'white',
+            letterSpacing: '-4.35px',
+            margin: 0,
+            wordBreak: 'break-word',
+            whiteSpace: 'pre-wrap',
+          }}
+        >
+          {values.announcement || '텍스트를 입력하세요'}
+        </p>
       </div>
     </div>
   )
