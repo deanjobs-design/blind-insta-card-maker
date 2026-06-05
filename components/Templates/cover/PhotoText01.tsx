@@ -3,12 +3,13 @@ import { FieldValues } from '@/lib/types'
 interface Props { values: FieldValues }
 
 export function PhotoText01({ values }: Props) {
+  const bg = values.mainImage || values.sectionImage
   return (
     <div className="relative" style={{ width: 1080, height: 1350, background: '#111' }}>
-      {/* Bottom image container */}
+      {/* Bottom image container — 공유 배경 이미지 */}
       <div className="absolute overflow-hidden" style={{ left: 20, top: 546, width: 1040, height: 690, borderRadius: 24 }}>
-        {values.sectionImage ? (
-          <img src={values.sectionImage} alt="" className="w-full h-full object-cover" />
+        {bg ? (
+          <img src={bg} alt="" className="w-full h-full object-cover" />
         ) : (
           <div className="w-full h-full bg-gray-700" />
         )}
@@ -36,9 +37,9 @@ export function PhotoText01({ values }: Props) {
         <img src="/assets/logo.png" alt="blind" style={{ height: 40, objectFit: 'contain' }} />
       </div>
 
-      {/* Company logo bottom-right */}
-      <div className="absolute" style={{ bottom: 10, right: 10 }}>
-        <img src="/assets/logo.png" alt="" style={{ width: 110, height: 110, objectFit: 'contain' }} />
+      {/* Corner logo bottom-right */}
+      <div className="absolute" style={{ bottom: 0, right: 0 }}>
+        <img src="/assets/corner_logo.png" alt="" style={{ width: 110, height: 110 }} />
       </div>
     </div>
   )

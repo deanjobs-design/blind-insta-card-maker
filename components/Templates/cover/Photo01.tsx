@@ -27,7 +27,7 @@ export function Photo01({ values }: Props) {
       <div className="absolute left-0 right-0 flex items-end justify-center" style={{ bottom: 0, paddingBottom: 140, paddingLeft: 40, paddingRight: 40, paddingTop: 24 }}>
         <div style={{
           background: '#f44c4f',
-          borderRadius: '12px 54px 54px 54px',
+          borderRadius: '54px 54px 12px 54px',
           paddingLeft: 64,
           paddingRight: 64,
           paddingTop: 40,

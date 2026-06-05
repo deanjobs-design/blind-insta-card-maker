@@ -11,7 +11,7 @@ export function PhotoComment({ values }: Props) {
         <div className="absolute inset-0 bg-gradient-to-br from-gray-600 to-gray-900" />
       )}
 
-      {/* Blind logo */}
+      {/* Blind logo top-left */}
       <div className="absolute" style={{ top: 50, left: 49 }}>
         <img src="/assets/logo.png" alt="blind" style={{ height: 40, objectFit: 'contain' }} />
       </div>
@@ -34,54 +34,55 @@ export function PhotoComment({ values }: Props) {
       }}>
         {/* Post header */}
         <div style={{ padding: '24px 24px 16px 40px', background: 'white', borderBottom: '1.84px solid #e9ebee' }}>
-          <div className="flex items-center justify-between">
-            <div className="flex items-center" style={{ gap: 17, paddingTop: 16 }}>
-              <div style={{ width: 84, height: 84, borderRadius: 42, background: '#f0f0f0', overflow: 'hidden', flexShrink: 0 }}>
-                {values.channelThumbnail && (
-                  <img src={values.channelThumbnail} alt="" className="w-full h-full object-cover" />
-                )}
-              </div>
-              <div>
-                <p style={{
-                  fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
-                  fontWeight: 600,
-                  fontSize: 29,
-                  color: '#222',
-                  letterSpacing: '0.58px',
-                  margin: 0,
-                  lineHeight: 1.3,
-                }}>
-                  {values.channelName || '채널명'}
-                </p>
-                <p style={{
-                  fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
-                  fontWeight: 400,
-                  fontSize: 25,
-                  color: '#54545a',
-                  margin: 0,
-                }}>
-                  {values.timestamp || '방금 전'}
-                </p>
-              </div>
+          <div className="flex items-center" style={{ gap: 17, paddingTop: 16 }}>
+            {/* 채널 썸네일 */}
+            <div style={{ width: 84, height: 84, borderRadius: 42, background: '#f0f0f0', overflow: 'hidden', flexShrink: 0 }}>
+              {values.channelThumbnail ? (
+                <img src={values.channelThumbnail} alt="" className="w-full h-full object-cover" />
+              ) : null}
+            </div>
+            <div>
+              <p style={{
+                fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
+                fontWeight: 600, fontSize: 29, color: '#222',
+                letterSpacing: '0.58px', margin: 0, lineHeight: 1.3,
+              }}>
+                {values.channelName || '채널명'}
+              </p>
+              <p style={{
+                fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
+                fontWeight: 400, fontSize: 25, color: '#54545a', margin: 0,
+              }}>
+                {values.timestamp || '방금 전'}
+              </p>
             </div>
           </div>
         </div>
 
         {/* Post body */}
-        <div style={{ padding: '4px 40px 40px 40px', background: 'white' }}>
+        <div style={{ padding: '4px 40px 12px 40px', background: 'white' }}>
           <p style={{
             fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
-            fontWeight: 600,
-            fontSize: 46,
-            lineHeight: 1.22,
-            color: '#222',
-            letterSpacing: '0.46px',
-            margin: 0,
+            fontWeight: 600, fontSize: 46, lineHeight: 1.22,
+            color: '#222', letterSpacing: '0.46px', margin: 0,
             wordBreak: 'break-word',
           }}>
             {values.postBody || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'}
           </p>
         </div>
+
+        {/* 서브 텍스트 */}
+        {values.subText && (
+          <div style={{ padding: '0 40px 32px 40px', background: 'white' }}>
+            <p style={{
+              fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
+              fontWeight: 400, fontSize: 32, lineHeight: 1.4,
+              color: '#54545a', margin: 0, wordBreak: 'break-word',
+            }}>
+              {values.subText}
+            </p>
+          </div>
+        )}
       </div>
     </div>
   )

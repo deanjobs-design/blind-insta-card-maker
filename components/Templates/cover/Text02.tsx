@@ -29,7 +29,7 @@ export function Text02({ values }: Props) {
             fontFamily: "'Rethink Sans', sans-serif",
             fontWeight: 700,
             fontSize: 140,
-            lineHeight: 1.05,
+            lineHeight: 1.0,
             color: 'white',
             letterSpacing: '-4.2px',
             margin: 0,

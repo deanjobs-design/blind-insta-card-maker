@@ -26,7 +26,7 @@ export function Text01({ values }: Props) {
             fontFamily: "'Rethink Sans', sans-serif",
             fontWeight: 700,
             fontSize: 145,
-            lineHeight: 1.05,
+            lineHeight: 1.0,
             color: 'white',
             letterSpacing: '-4.35px',
             margin: 0,

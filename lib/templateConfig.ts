@@ -73,9 +73,11 @@ export const TEMPLATES: TemplateConfig[] = [
     section: 'cover',
     fields: [
       imageField('mainImage', '배경 사진'),
+      imageField('channelThumbnail', '채널 로고'),
       textField('channelName', '채널명'),
       textField('timestamp', '시간', '방금 전'),
       textareaField('postBody', '게시물 본문', '게시물 내용'),
+      textareaField('subText', '서브 텍스트', '추가 설명 (선택사항)'),
     ],
   },
   {

@@ -11,7 +11,7 @@ export function PhotoText02({ values }: Props) {
         <div className="absolute inset-0 bg-gradient-to-br from-gray-600 to-gray-900" />
       )}
 
-      {/* Blind logo */}
+      {/* Blind logo top-left */}
       <div className="absolute" style={{ top: 50, left: 49 }}>
         <img src="/assets/logo.png" alt="blind" style={{ height: 40, objectFit: 'contain' }} />
       </div>
@@ -30,6 +30,7 @@ export function PhotoText02({ values }: Props) {
           gap: 26,
           width: 900,
         }}>
+          {/* 헤드라인 — 최대 3줄 */}
           <p style={{
             fontFamily: "'Rethink Sans', sans-serif",
             fontWeight: 600,
@@ -39,9 +40,14 @@ export function PhotoText02({ values }: Props) {
             letterSpacing: '-2.2px',
             margin: 0,
             wordBreak: 'break-word',
+            display: '-webkit-box',
+            WebkitLineClamp: 3,
+            WebkitBoxOrient: 'vertical' as const,
+            overflow: 'hidden',
           }}>
             {values.headline || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'}
           </p>
+          {/* 본문 — 최대 3줄 */}
           {values.body && (
             <p style={{
               fontFamily: "'Rethink Sans', sans-serif",
@@ -51,6 +57,10 @@ export function PhotoText02({ values }: Props) {
               color: 'white',
               letterSpacing: '-0.32px',
               margin: 0,
+              display: '-webkit-box',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical' as const,
+              overflow: 'hidden',
             }}>
               {values.body}
             </p>
@@ -59,8 +69,9 @@ export function PhotoText02({ values }: Props) {
         <div style={{ background: '#f44c4f', height: 431, width: 180, borderTopRightRadius: 48 }} />
       </div>
 
-      <div className="absolute" style={{ bottom: 10, right: 10 }}>
-        <img src="/assets/logo.png" alt="" style={{ width: 110, height: 110, objectFit: 'contain' }} />
+      {/* Corner logo bottom-right */}
+      <div className="absolute" style={{ bottom: 0, right: 0 }}>
+        <img src="/assets/corner_logo.png" alt="" style={{ width: 110, height: 110 }} />
       </div>
     </div>
   )
