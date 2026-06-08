@@ -8,14 +8,16 @@ interface CommentEntry {
   text: string
 }
 
-// 스레드 라인 — 엘보 PNG(#cccccc, 세로획 x≈3~6, 가로획 y≈66)와 정렬
+// 스레드 라인 — 엘보 PNG(144x144, #cccccc)를 72px 박스로 표시
+// 144px 기준: 세로획 x≈7, 가로획 y≈98, 가로획 끝 x≈129 → 0.5배 표시
 const LINE_COLOR = '#cccccc'
-const THREAD_W = 64        // 스레드 컬럼 너비 (엘보 가로획 끝 x≈65에 맞춤)
-const RAIL_X = 3           // 수직 레일 x = 엘보 세로획 위치
-const RAIL_STROKE = 3      // 레일 두께 = 엘보 획 두께
+const THREAD_W = 64        // 스레드 컬럼 너비 (엘보 가로획 끝 64.5에 맞춤)
+const RAIL_X = 3           // 수직 레일 x = 엘보 세로획 위치(7*0.5≈3.5)
+const RAIL_STROKE = 3      // 레일 두께
 const HEADER_H = 94        // 헤더(썸네일 행) 높이
 const THUMB_CENTER = HEADER_H / 2  // 썸네일 세로 중심 = 47
-const ELBOW_HSTROKE_Y = 66 // 엘보 PNG 가로획의 세로 위치(72px 기준)
+const ELBOW_DISP = 72      // 엘보 표시 크기(144 → 72)
+const ELBOW_HSTROKE_Y = 49 // 표시 좌표에서 가로획 세로 위치(98*0.5)
 const ROW_GAP = 40         // 댓글 사이 간격
 
 function CommentRow({ entry, isFirst, isLast }: { entry: CommentEntry; isFirst: boolean; isLast: boolean }) {
@@ -45,8 +47,8 @@ function CommentRow({ entry, isFirst, isLast }: { entry: CommentEntry; isFirst: 
             position: 'absolute',
             left: 0,
             top: THUMB_CENTER - ELBOW_HSTROKE_Y,
-            width: THREAD_W,
-            height: THREAD_W,
+            width: ELBOW_DISP,
+            height: ELBOW_DISP,
           }}
         />
       </div>
