@@ -5,9 +5,10 @@ import { InputPanel } from '@/components/Editor/InputPanel'
 import { PreviewPanel } from '@/components/Editor/PreviewPanel'
 import { DownloadBar } from '@/components/Editor/DownloadBar'
 import { CardSetRenderer } from '@/components/Editor/CardSetRenderer'
+import { TemplateRenderer } from '@/components/Templates/TemplateRenderer'
 import { TemplateConfig, FieldValues, CardItem } from '@/lib/types'
 import { captureCard } from '@/lib/exportCard'
-import { downloadZip } from '@/lib/createZip'
+import { downloadZip, downloadSinglePng } from '@/lib/createZip'
 import { getTemplate } from '@/lib/templateConfig'
 
 const TEMPLATE_DEFAULTS: Record<string, Record<string, string>> = {
@@ -30,7 +31,10 @@ export default function Home() {
   const [cardSet, setCardSet] = useState<CardItem[]>([])
   const [isDownloading, setIsDownloading] = useState(false)
   const [sharedCoverImage, setSharedCoverImage] = useState<string>('')
+  const [isDownloadingPng, setIsDownloadingPng] = useState(false)
+  const [showOverview, setShowOverview] = useState(false)
   const renderRef = useRef<HTMLDivElement>(null)
+  const currentRenderRef = useRef<HTMLDivElement>(null)
 
   // 댓글 멀티페이지 상태
   const [commentPages, setCommentPages] = useState<CommentPageItem[]>([INITIAL_COMMENT_PAGE])
@@ -119,6 +123,20 @@ export default function Home() {
     setCardSet(prev => prev.filter(c => c.id !== id))
   }, [])
 
+  // 현재 카드를 바로 PNG로 다운로드 (세트에 추가하지 않음)
+  const handleDownloadPng = useCallback(async () => {
+    if (!currentRenderRef.current || !selectedTemplate) return
+    setIsDownloadingPng(true)
+    try {
+      const el = currentRenderRef.current.querySelector('[data-current-card]') as HTMLElement
+      if (!el) return
+      const dataUrl = await captureCard(el)
+      await downloadSinglePng(dataUrl, `${selectedTemplate.id}.png`)
+    } finally {
+      setIsDownloadingPng(false)
+    }
+  }, [selectedTemplate])
+
   const handleDownload = useCallback(async () => {
     if (!renderRef.current || cardSet.length === 0) return
     setIsDownloading(true)
@@ -143,8 +161,14 @@ export default function Home() {
 
   return (
     <main className="flex flex-col bg-gray-100 overflow-hidden" style={{ height: '100dvh' }}>
-      <header className="bg-white border-b border-gray-200 px-8 py-4 flex-shrink-0">
+      <header className="bg-white border-b border-gray-200 px-8 py-4 flex-shrink-0 flex items-center justify-between">
         <h1 className="text-xl font-bold text-gray-900">블라인드 카드 메이커</h1>
+        <button
+          onClick={() => setShowOverview(true)}
+          className="px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+        >
+          ⊞ 전체 보기
+        </button>
       </header>
 
       <TemplateSelector
@@ -164,6 +188,8 @@ export default function Home() {
             values={activeValues}
             onChange={handleFieldChange}
             onAddToSet={handleAddToSet}
+            onDownloadPng={handleDownloadPng}
+            isDownloadingPng={isDownloadingPng}
           />
         </div>
         <div className="flex-1 min-h-0 min-w-0">
@@ -184,6 +210,70 @@ export default function Home() {
       </div>
 
       <CardSetRenderer ref={renderRef} cards={cardSet} />
+
+      {/* 현재 카드 풀사이즈 렌더 (PNG 즉시 다운로드용, 화면 밖) */}
+      <div ref={currentRenderRef} className="absolute -left-[99999px] top-0 pointer-events-none">
+        {selectedTemplate && (
+          <div data-current-card style={{ width: 1080, height: 1350 }}>
+            <TemplateRenderer templateId={selectedTemplate.id} values={activeValues} />
+          </div>
+        )}
+      </div>
+
+      {/* 전체 보기 오버레이 */}
+      {showOverview && (
+        <div className="fixed inset-0 z-50 bg-neutral-900 flex flex-col">
+          <div className="flex items-center justify-between px-8 py-4 bg-white/10 flex-shrink-0">
+            <h2 className="text-lg font-bold text-white">전체 보기 — 다운로드 세트 ({cardSet.length}장)</h2>
+            <div className="flex gap-2">
+              <button
+                onClick={handleDownload}
+                disabled={cardSet.length === 0 || isDownloading}
+                className="px-4 py-2 rounded-lg text-sm font-medium bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50"
+              >
+                {isDownloading ? '렌더링 중...' : '⬇ ZIP 다운로드'}
+              </button>
+              <button
+                onClick={() => setShowOverview(false)}
+                className="px-4 py-2 rounded-lg text-sm font-medium bg-white/20 text-white hover:bg-white/30"
+              >
+                ✕ 닫기
+              </button>
+            </div>
+          </div>
+          <div className="flex-1 overflow-auto p-8">
+            {cardSet.length === 0 ? (
+              <div className="h-full flex items-center justify-center text-white/60 text-sm">
+                세트에 추가된 카드가 없습니다. 각 탭에서 “+ 세트에 추가”로 카드를 담아보세요.
+              </div>
+            ) : (
+              <div className="flex flex-wrap gap-6 justify-center">
+                {cardSet.map((card, i) => (
+                  <div key={card.id} className="flex flex-col items-center gap-2">
+                    <div
+                      className="bg-white rounded-lg overflow-hidden shadow-xl"
+                      style={{ width: 270, height: 337.5 }}
+                    >
+                      <div style={{ width: 1080, height: 1350, transform: 'scale(0.25)', transformOrigin: 'top left' }}>
+                        <TemplateRenderer templateId={card.templateId} values={card.values} />
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2 text-white text-xs">
+                      <span>{String(i + 1).padStart(2, '0')}. {card.label}</span>
+                      <button
+                        onClick={() => handleRemoveFromSet(card.id)}
+                        className="text-white/50 hover:text-red-400"
+                      >
+                        삭제
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
     </main>
   )
 }

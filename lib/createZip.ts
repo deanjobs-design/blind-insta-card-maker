@@ -21,3 +21,10 @@ export async function downloadZip(cards: ZipEntry[], zipName = 'cards.zip'): Pro
   const blob = await zip.generateAsync({ type: 'blob' })
   saveAs(blob, zipName)
 }
+
+// 단일 PNG 다운로드 (dataURL → 파일 저장)
+export async function downloadSinglePng(dataUrl: string, filename = 'card.png'): Promise<void> {
+  const res = await fetch(dataUrl)
+  const blob = await res.blob()
+  saveAs(blob, filename)
+}

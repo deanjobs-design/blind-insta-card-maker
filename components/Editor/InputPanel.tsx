@@ -7,9 +7,11 @@ interface Props {
   values: FieldValues
   onChange: (key: string, value: string) => void
   onAddToSet: () => void
+  onDownloadPng: () => void
+  isDownloadingPng: boolean
 }
 
-export function InputPanel({ template, values, onChange, onAddToSet }: Props) {
+export function InputPanel({ template, values, onChange, onAddToSet, onDownloadPng, isDownloadingPng }: Props) {
   if (!template) {
     return (
       <div className="bg-white rounded-xl shadow-sm p-6 flex items-center justify-center text-gray-400 text-sm h-full">
@@ -108,9 +110,14 @@ export function InputPanel({ template, values, onChange, onAddToSet }: Props) {
           )}
         </div>
       ))}
-      <Button onClick={onAddToSet} className="mt-auto w-full">
-        + 세트에 추가
-      </Button>
+      <div className="mt-auto flex flex-col gap-2">
+        <Button onClick={onAddToSet} className="w-full">
+          + 세트에 추가
+        </Button>
+        <Button onClick={onDownloadPng} variant="secondary" disabled={isDownloadingPng} className="w-full">
+          {isDownloadingPng ? '저장 중...' : '⬇ PNG 다운로드'}
+        </Button>
+      </div>
     </div>
   )
 }
