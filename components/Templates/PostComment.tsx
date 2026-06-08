@@ -37,7 +37,7 @@ function CommentRow({ entry, isFirst, isLast }: { entry: CommentEntry; isFirst: 
             left: RAIL_X,
             width: RAIL_STROKE,
             background: LINE_COLOR,
-            top: isFirst ? -6 : 0,
+            top: isFirst ? -40 : 0, // 첫 댓글은 카드 맨 위(콘텐츠 top:40 상쇄)부터 시작
             bottom: -ROW_GAP, // 다음 행까지(paddingBottom 간격 포함) 이어줌
           }} />
         )}
