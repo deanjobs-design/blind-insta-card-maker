@@ -1,4 +1,4 @@
-import { TemplateConfig, TemplateField } from './types'
+import { TemplateConfig, TemplateField, SelectOption } from './types'
 
 const textField = (key: string, label: string, placeholder = ''): TemplateField => ({
   key, label, type: 'text', placeholder,
@@ -11,6 +11,9 @@ const imageField = (key: string, label: string): TemplateField => ({
 })
 const toggleField = (key: string, label: string): TemplateField => ({
   key, label, type: 'toggle',
+})
+const selectField = (key: string, label: string, options: SelectOption[]): TemplateField => ({
+  key, label, type: 'select', options,
 })
 
 export const TEMPLATES: TemplateConfig[] = [
@@ -129,7 +132,12 @@ export const TEMPLATES: TemplateConfig[] = [
     id: 'last_page',
     name: '마지막 페이지',
     section: 'last_page',
-    fields: [],
+    fields: [
+      selectField('variant', '이미지 선택', [
+        { value: 'a', label: '이미지 A' },
+        { value: 'b', label: '이미지 B' },
+      ]),
+    ],
   },
 ]
 

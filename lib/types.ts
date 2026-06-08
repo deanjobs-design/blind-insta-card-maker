@@ -1,4 +1,9 @@
-export type FieldType = 'text' | 'textarea' | 'image' | 'color' | 'toggle'
+export type FieldType = 'text' | 'textarea' | 'image' | 'color' | 'toggle' | 'select'
+
+export interface SelectOption {
+  value: string
+  label: string
+}
 
 export interface TemplateField {
   key: string
@@ -6,6 +11,7 @@ export interface TemplateField {
   type: FieldType
   placeholder?: string
   required?: boolean
+  options?: SelectOption[]   // type==='select'
 }
 
 export interface TemplateConfig {
