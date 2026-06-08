@@ -8,57 +8,98 @@ interface CommentEntry {
   text: string
 }
 
-function CommentRow({ logo, company, text }: CommentEntry) {
+// 스레드 라인 — 엘보 PNG(#cccccc, 세로획 x≈3~6, 가로획 y≈66)와 정렬
+const LINE_COLOR = '#cccccc'
+const THREAD_W = 64        // 스레드 컬럼 너비 (엘보 가로획 끝 x≈65에 맞춤)
+const RAIL_X = 3           // 수직 레일 x = 엘보 세로획 위치
+const RAIL_STROKE = 3      // 레일 두께 = 엘보 획 두께
+const HEADER_H = 94        // 헤더(썸네일 행) 높이
+const THUMB_CENTER = HEADER_H / 2  // 썸네일 세로 중심 = 47
+const ELBOW_HSTROKE_Y = 66 // 엘보 PNG 가로획의 세로 위치(72px 기준)
+const ROW_GAP = 40         // 댓글 사이 간격
+
+function CommentRow({ entry, isFirst, isLast }: { entry: CommentEntry; isFirst: boolean; isLast: boolean }) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
-      {/* Header */}
-      <div style={{ height: 94, display: 'flex', alignItems: 'center' }}>
-        <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-          {/* Logo thumbnail */}
-          <div style={{
-            width: 56, height: 56, borderRadius: 36,
-            background: 'rgba(163,163,163,0.3)',
-            border: '1.4px solid rgba(163,163,163,0.3)',
-            overflow: 'hidden', flexShrink: 0,
-          }}>
-            {logo ? (
-              <img src={logo} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            ) : (
-              <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <img src="/assets/logo.png" alt="" style={{ height: 20, objectFit: 'contain', opacity: 0.5 }} />
-              </div>
-            )}
-          </div>
-          {/* Company name */}
-          <span style={{
-            fontFamily: "'Rethink Sans', sans-serif",
-            fontWeight: 500,
-            fontSize: 36,
-            color: '#e9e9e9',
-            whiteSpace: 'nowrap',
-          }}>{company}</span>
-        </div>
+    <div style={{
+      display: 'flex',
+      alignItems: 'stretch',
+      paddingBottom: isLast ? 0 : ROW_GAP,
+    }}>
+      {/* Thread column */}
+      <div style={{ width: THREAD_W, flexShrink: 0, position: 'relative' }}>
+        {/* 수직 레일 — 줄을 연속으로 이어줌 */}
+        <div style={{
+          position: 'absolute',
+          left: RAIL_X,
+          width: RAIL_STROKE,
+          background: LINE_COLOR,
+          top: isFirst ? -6 : 0,
+          // 마지막 행은 썸네일 중심까지만, 나머지는 행 끝까지
+          ...(isLast ? { height: THUMB_CENTER + 6 } : { bottom: 0 }),
+        }} />
+        {/* 엘보 곡선 — 썸네일로 휘어 들어감 */}
+        <img
+          src="/assets/thread_line.png"
+          alt=""
+          style={{
+            position: 'absolute',
+            left: 0,
+            top: THUMB_CENTER - ELBOW_HSTROKE_Y,
+            width: THREAD_W,
+            height: THREAD_W,
+          }}
+        />
       </div>
-      {/* Comment text — Regular */}
-      <p style={{
-        fontFamily: "'Rethink Sans', sans-serif",
-        fontWeight: 400,
-        fontSize: 54,
-        lineHeight: 1.22,
-        color: 'white',
-        letterSpacing: '-1.08px',
-        margin: 0,
-        wordBreak: 'break-word',
-        width: '100%',
-      }}>
-        {text}
-      </p>
+
+      {/* Content column */}
+      <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column' }}>
+        {/* Header */}
+        <div style={{ height: HEADER_H, display: 'flex', alignItems: 'center' }}>
+          <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+            <div style={{
+              width: 56, height: 56, borderRadius: 36,
+              background: 'rgba(163,163,163,0.3)',
+              border: '1.4px solid rgba(163,163,163,0.3)',
+              overflow: 'hidden', flexShrink: 0,
+            }}>
+              {entry.logo ? (
+                <img src={entry.logo} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              ) : (
+                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <img src="/assets/logo.png" alt="" style={{ height: 20, objectFit: 'contain', opacity: 0.5 }} />
+                </div>
+              )}
+            </div>
+            <span style={{
+              fontFamily: "'Rethink Sans', sans-serif",
+              fontWeight: 500,
+              fontSize: 36,
+              color: '#e9e9e9',
+              whiteSpace: 'nowrap',
+            }}>{entry.company}</span>
+          </div>
+        </div>
+        {/* Comment text */}
+        <p style={{
+          fontFamily: "'Rethink Sans', sans-serif",
+          fontWeight: 400,
+          fontSize: 54,
+          lineHeight: 1.22,
+          color: 'white',
+          letterSpacing: '-1.08px',
+          margin: 0,
+          wordBreak: 'break-word',
+          width: '100%',
+        }}>
+          {entry.text}
+        </p>
+      </div>
     </div>
   )
 }
 
 export function PostComment({ values }: Props) {
-  const slots = [
+  const slots: CommentEntry[] = [
     { logo: values.c1Logo, company: values.c1Company || 'Google', text: values.c1Text || 'Rotating out for cheaper cost employees' },
     { logo: values.c2Logo, company: values.c2Company || 'Amazon', text: values.c2Text || "All the people in the comments mocking you are heartless. I've been laid off before. It was done over a teams call...My boss was cold. No emotions. No compassion.You're a good person for caring. You should reach out to your former colleagues...I'm sure they will appreciate it." },
     ...(values.c3Company || values.c3Text ? [{ logo: values.c3Logo, company: values.c3Company || '', text: values.c3Text || '' }] : []),
@@ -67,19 +108,14 @@ export function PostComment({ values }: Props) {
 
   return (
     <div className="relative" style={{ width: 1080, height: 1350, background: '#1a1a1a' }}>
-      {/* Threading line */}
-      <div className="absolute" style={{ left: 45, top: 0, width: 61, height: 1089 }}>
-        <img src="/assets/thread_line.png" alt="" style={{ width: '100%', height: '100%', objectFit: 'fill' }} />
-      </div>
-
       {/* Content */}
       <div className="absolute" style={{
-        left: 120, right: 80, top: 40, bottom: 110,
-        display: 'flex', flexDirection: 'column', gap: 40,
+        left: 40, right: 80, top: 40, bottom: 110,
+        display: 'flex', flexDirection: 'column',
         overflow: 'hidden',
       }}>
         {slots.map((s, i) => (
-          <CommentRow key={i} {...s} />
+          <CommentRow key={i} entry={s} isFirst={i === 0} isLast={i === slots.length - 1} />
         ))}
       </div>
 
