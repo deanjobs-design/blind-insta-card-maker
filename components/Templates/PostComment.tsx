@@ -29,16 +29,18 @@ function CommentRow({ entry, isFirst, isLast }: { entry: CommentEntry; isFirst: 
     }}>
       {/* Thread column */}
       <div style={{ width: THREAD_W, flexShrink: 0, position: 'relative' }}>
-        {/* 수직 레일 — 줄을 연속으로 이어줌 */}
-        <div style={{
-          position: 'absolute',
-          left: RAIL_X,
-          width: RAIL_STROKE,
-          background: LINE_COLOR,
-          top: isFirst ? -6 : 0,
-          // 마지막 행은 썸네일 중심까지만, 나머지는 다음 행까지(paddingBottom 간격 포함)
-          ...(isLast ? { height: THUMB_CENTER } : { bottom: -ROW_GAP }),
-        }} />
+        {/* 수직 레일 — 줄을 연속으로 이어줌. 마지막 행은 레일 없이 엘보 곡선만
+            (직선 꼬리가 아이콘 아래로 튀어나오지 않게) */}
+        {!isLast && (
+          <div style={{
+            position: 'absolute',
+            left: RAIL_X,
+            width: RAIL_STROKE,
+            background: LINE_COLOR,
+            top: isFirst ? -6 : 0,
+            bottom: -ROW_GAP, // 다음 행까지(paddingBottom 간격 포함) 이어줌
+          }} />
+        )}
         {/* 엘보 곡선 — 썸네일로 휘어 들어감 */}
         <img
           src="/assets/thread_line.png"
