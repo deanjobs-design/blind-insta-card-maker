@@ -21,8 +21,12 @@ export default function Home() {
 
   const handleTemplateSelect = useCallback((t: TemplateConfig) => {
     setSelectedTemplate(t)
-    // 표지 템플릿으로 전환 시 공유 배경 이미지 유지
-    setFieldValues(t.section === 'cover' && sharedCoverImage ? { mainImage: sharedCoverImage } : {})
+    const base = t.section === 'cover' && sharedCoverImage ? { mainImage: sharedCoverImage } : {}
+    // 템플릿별 기본값
+    const defaults: Record<string, Record<string, string>> = {
+      text_02: { showChannelInfo: 'true' },
+    }
+    setFieldValues({ ...base, ...(defaults[t.id] ?? {}) })
   }, [sharedCoverImage])
 
   const handleFieldChange = useCallback((key: string, value: string) => {

@@ -25,26 +25,8 @@ export function Photo01({ values }: Props) {
         background: 'linear-gradient(to top, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0) 100%)',
       }} />
 
-      {/* Per-line highlight headline */}
-      <div className="absolute" style={{ left: 40, right: 40, bottom: 100 }}>
-        {showSubtitle && (
-          <p style={{
-            fontFamily: "'Rethink Sans', sans-serif",
-            fontWeight: 400,
-            fontSize: 40,
-            lineHeight: 1.3,
-            color: '#ffffff',
-            margin: 0,
-            marginBottom: 20,
-            wordBreak: 'break-word',
-            display: '-webkit-box',
-            WebkitLineClamp: 4,
-            WebkitBoxOrient: 'vertical' as const,
-            overflow: 'hidden',
-          }}>
-            {values.subtitle || '서브타이틀을 입력하세요'}
-          </p>
-        )}
+      {/* Headline + subtitle (헤드라인 아래) */}
+      <div className="absolute flex flex-col" style={{ left: 40, right: 40, bottom: 100, gap: 20 }}>
         <p style={{
           fontFamily: "'Rethink Sans', sans-serif",
           fontWeight: 600,
@@ -65,6 +47,23 @@ export function Photo01({ values }: Props) {
             {text}
           </span>
         </p>
+        {showSubtitle && (
+          <p style={{
+            fontFamily: "'Rethink Sans', sans-serif",
+            fontWeight: 400,
+            fontSize: 40,
+            lineHeight: 1.3,
+            color: '#ffffff',
+            margin: 0,
+            wordBreak: 'break-word',
+            display: '-webkit-box',
+            WebkitLineClamp: 4,
+            WebkitBoxOrient: 'vertical' as const,
+            overflow: 'hidden',
+          }}>
+            {values.subtitle || 'Join it with eyes wide open. I have seen people get 2-3 months to prove their value and then cut'}
+          </p>
+        )}
       </div>
     </div>
   )

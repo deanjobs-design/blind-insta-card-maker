@@ -52,7 +52,8 @@ export const TEMPLATES: TemplateConfig[] = [
     fields: [
       imageField('mainImage', '배경 사진'),
       textareaField('headline', '헤드라인', '헤드라인 텍스트'),
-      textareaField('body', '본문', '본문 텍스트'),
+      toggleField('showBody', '본문'),
+      textareaField('body', '본문 텍스트', '본문 텍스트'),
     ],
   },
   {

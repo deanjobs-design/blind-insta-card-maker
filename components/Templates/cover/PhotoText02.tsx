@@ -3,6 +3,7 @@ import { FieldValues } from '@/lib/types'
 interface Props { values: FieldValues }
 
 export function PhotoText02({ values }: Props) {
+  const showBody = values.showBody === 'true'
   return (
     <div className="relative overflow-hidden" style={{ width: 1080, height: 1350, background: '#111' }}>
       {/* 배경 이미지 — 없으면 샘플 */}
@@ -48,22 +49,24 @@ export function PhotoText02({ values }: Props) {
           }}>
             {values.headline || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'}
           </p>
-          {/* 본문 — 최대 3줄 */}
-          <p style={{
-            fontFamily: "'Rethink Sans', sans-serif",
-            fontWeight: 400,
-            fontSize: 32,
-            lineHeight: 1.2,
-            color: 'white',
-            letterSpacing: '-0.32px',
-            margin: 0,
-            display: '-webkit-box',
-            WebkitLineClamp: 3,
-            WebkitBoxOrient: 'vertical' as const,
-            overflow: 'hidden',
-          }}>
-            {values.body || 'Our new grading system triple-checks every route using first ascent reports, local consensus, and verified tick data.'}
-          </p>
+          {/* 본문 — 토글 ON일 때만, 최대 3줄 */}
+          {showBody && (
+            <p style={{
+              fontFamily: "'Rethink Sans', sans-serif",
+              fontWeight: 400,
+              fontSize: 32,
+              lineHeight: 1.2,
+              color: 'white',
+              letterSpacing: '-0.32px',
+              margin: 0,
+              display: '-webkit-box',
+              WebkitLineClamp: 3,
+              WebkitBoxOrient: 'vertical' as const,
+              overflow: 'hidden',
+            }}>
+              {values.body || 'Our new grading system triple-checks every route using first ascent reports, local consensus, and verified tick data.'}
+            </p>
+          )}
         </div>
         <div style={{ alignSelf: 'stretch', width: 180, paddingTop: 150 }}>
           <div style={{ background: '#f44c4f', height: '100%', borderTopRightRadius: 48 }} />
@@ -71,7 +74,7 @@ export function PhotoText02({ values }: Props) {
       </div>
 
       {/* Arrow 우하단 */}
-      <div className="absolute" style={{ right: 30, bottom: 9 }}>
+      <div className="absolute" style={{ right: 14, bottom: 14 }}>
         <img src="/assets/arrow.png" alt="" style={{ width: 96, height: 96 }} />
       </div>
     </div>

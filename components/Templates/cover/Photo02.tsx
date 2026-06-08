@@ -33,8 +33,22 @@ export function Photo02({ values }: Props) {
         background: 'linear-gradient(to top, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0) 100%)',
       }} />
 
-      {/* Headline + optional subtitle */}
+      {/* Headline + subtitle (헤드라인 아래) */}
       <div className="absolute left-0 right-0 flex flex-col items-center justify-end" style={{ bottom: 0, paddingBottom: 120, paddingLeft: 40, paddingRight: 40, gap: 20 }}>
+        <p style={{
+          fontFamily: "'Rethink Sans', sans-serif",
+          fontWeight: 600,
+          fontSize: 110,
+          lineHeight: 1.05,
+          color: 'white',
+          letterSpacing: '-3.3px',
+          textAlign: 'center',
+          margin: 0,
+          wordBreak: 'break-word',
+          width: '100%',
+        }}>
+          {renderRed(text)}
+        </p>
         {showSubtitle && (
           <p style={{
             fontFamily: "'Rethink Sans', sans-serif",
@@ -51,23 +65,9 @@ export function Photo02({ values }: Props) {
             WebkitBoxOrient: 'vertical' as const,
             overflow: 'hidden',
           }}>
-            {values.subtitle || '서브타이틀을 입력하세요'}
+            {values.subtitle || 'Join it with eyes wide open. I have seen people get 2-3 months to prove their value and then cut'}
           </p>
         )}
-        <p style={{
-          fontFamily: "'Rethink Sans', sans-serif",
-          fontWeight: 600,
-          fontSize: 110,
-          lineHeight: 1.05,
-          color: 'white',
-          letterSpacing: '-3.3px',
-          textAlign: 'center',
-          margin: 0,
-          wordBreak: 'break-word',
-          width: '100%',
-        }}>
-          {renderRed(text)}
-        </p>
       </div>
     </div>
   )
