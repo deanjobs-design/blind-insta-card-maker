@@ -43,9 +43,9 @@ export function TemplateGallery({ onSelect }: Props) {
                 >
                   <div
                     className="bg-white rounded-xl overflow-hidden shadow-sm border-2 border-transparent group-hover:border-blue-500 group-hover:shadow-lg transition-all"
-                    style={{ width: 216, height: 270 }}
+                    style={{ width: 216, height: 270, textAlign: 'left' }}
                   >
-                    <div style={{ width: 1080, height: 1350, transform: 'scale(0.2)', transformOrigin: 'top left' }}>
+                    <div style={{ width: 1080, height: 1350, transform: 'scale(0.2)', transformOrigin: 'top left', textAlign: 'left' }}>
                       <TemplateRenderer templateId={t.id} values={previewValues(t)} />
                     </div>
                   </div>
