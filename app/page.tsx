@@ -25,6 +25,7 @@ export default function Home() {
     // 템플릿별 기본값
     const defaults: Record<string, Record<string, string>> = {
       text_02: { showChannelInfo: 'true' },
+      photo_text_02: { showBody: 'true' },
     }
     setFieldValues({ ...base, ...(defaults[t.id] ?? {}) })
   }, [sharedCoverImage])

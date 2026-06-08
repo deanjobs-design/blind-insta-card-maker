@@ -61,7 +61,7 @@ export const TEMPLATES: TemplateConfig[] = [
     name: '텍스트형 A',
     section: 'cover',
     fields: [
-      textareaField('announcement', '본문 텍스트', '공지/발표 텍스트를 입력하세요'),
+      textareaField('announcement', '본문 텍스트 ([텍스트] = 강조)', '공지/발표 텍스트를 입력하세요'),
     ],
   },
   {

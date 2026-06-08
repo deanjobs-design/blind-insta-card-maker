@@ -53,7 +53,7 @@ export function Photo01({ values }: Props) {
             fontWeight: 400,
             fontSize: 40,
             lineHeight: 1.3,
-            color: '#ffffff',
+            color: '#DDDDDD',
             margin: 0,
             wordBreak: 'break-word',
             display: '-webkit-box',

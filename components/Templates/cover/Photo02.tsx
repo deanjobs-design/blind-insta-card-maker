@@ -55,7 +55,7 @@ export function Photo02({ values }: Props) {
             fontWeight: 400,
             fontSize: 40,
             lineHeight: 1.3,
-            color: '#ffffff',
+            color: '#DDDDDD',
             textAlign: 'center',
             margin: 0,
             wordBreak: 'break-word',
