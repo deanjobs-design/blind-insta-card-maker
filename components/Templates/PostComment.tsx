@@ -19,12 +19,14 @@ const THUMB_CENTER = HEADER_H / 2  // 썸네일 세로 중심 = 47
 const ELBOW_DISP = 72      // 엘보 표시 크기(144 → 72)
 const ELBOW_HSTROKE_Y = 49 // 표시 좌표에서 가로획 세로 위치(98*0.5)
 const ROW_GAP = 40         // 댓글 사이 간격
+const CONTENT_TOP = 40     // 첫 댓글 상단 여백 (아이콘 위치용)
 
 function CommentRow({ entry, isFirst, isLast }: { entry: CommentEntry; isFirst: boolean; isLast: boolean }) {
   return (
     <div style={{
       display: 'flex',
       alignItems: 'stretch',
+      paddingTop: isFirst ? CONTENT_TOP : 0,
       paddingBottom: isLast ? 0 : ROW_GAP,
     }}>
       {/* Thread column */}
@@ -37,7 +39,7 @@ function CommentRow({ entry, isFirst, isLast }: { entry: CommentEntry; isFirst: 
             left: RAIL_X,
             width: RAIL_STROKE,
             background: LINE_COLOR,
-            top: isFirst ? -40 : 0, // 첫 댓글은 카드 맨 위(콘텐츠 top:40 상쇄)부터 시작
+            top: isFirst ? -CONTENT_TOP : 0, // 첫 댓글은 카드 맨 위까지 레일 연장
             bottom: -ROW_GAP, // 다음 행까지(paddingBottom 간격 포함) 이어줌
           }} />
         )}
@@ -116,7 +118,7 @@ export function PostComment({ values }: Props) {
     <div className="relative" style={{ width: 1080, height: 1350, background: '#1a1a1a' }}>
       {/* Content */}
       <div className="absolute" style={{
-        left: 40, right: 80, top: 40, bottom: 110,
+        left: 40, right: 80, top: 0, bottom: 110,
         display: 'flex', flexDirection: 'column',
         overflow: 'hidden',
       }}>
