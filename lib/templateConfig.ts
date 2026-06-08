@@ -104,22 +104,22 @@ export const TEMPLATES: TemplateConfig[] = [
     name: '댓글',
     section: 'post_comment',
     fields: [
-      // 원글
-      textField('origCompany', '원글 회사명', 'Google'),
-      textField('origUser', '원글 익명', 'name'),
-      textareaField('origText', '원글 내용', '원글 내용을 입력하세요'),
       // 댓글 1
-      textField('c1Company', '댓글1 회사명', 'Amazon'),
-      textField('c1User', '댓글1 익명', 'name'),
+      imageField('c1Logo', '댓글1 로고'),
+      textField('c1Company', '댓글1 회사명', 'Google'),
       textareaField('c1Text', '댓글1 내용', '댓글 내용을 입력하세요'),
-      // 댓글 2 (선택)
-      textField('c2Company', '댓글2 회사명 (선택)'),
-      textField('c2User', '댓글2 익명', 'name'),
-      textareaField('c2Text', '댓글2 내용 (선택)'),
+      // 댓글 2
+      imageField('c2Logo', '댓글2 로고'),
+      textField('c2Company', '댓글2 회사명', 'Amazon'),
+      textareaField('c2Text', '댓글2 내용', '댓글 내용을 입력하세요'),
       // 댓글 3 (선택)
+      imageField('c3Logo', '댓글3 로고 (선택)'),
       textField('c3Company', '댓글3 회사명 (선택)'),
-      textField('c3User', '댓글3 익명', 'name'),
       textareaField('c3Text', '댓글3 내용 (선택)'),
+      // 댓글 4 (선택)
+      imageField('c4Logo', '댓글4 로고 (선택)'),
+      textField('c4Company', '댓글4 회사명 (선택)'),
+      textareaField('c4Text', '댓글4 내용 (선택)'),
     ],
   },
   {
