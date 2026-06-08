@@ -11,8 +11,8 @@ interface CommentEntry {
 // 스레드 라인 — 엘보 PNG(144x144, #cccccc)를 72px 박스로 표시
 // 144px 기준: 세로획 x≈7, 가로획 y≈98, 가로획 끝 x≈129 → 0.5배 표시
 const LINE_COLOR = '#cccccc'
-const THREAD_W = 64        // 스레드 컬럼 너비 (엘보 가로획 끝 64.5에 맞춤)
-const RAIL_X = 3           // 수직 레일 x = 엘보 세로획 위치(7*0.5≈3.5)
+const THREAD_W = 80        // 스레드 컬럼 너비 (라인 끝~로고 16px 간격)
+const RAIL_X = 2           // 수직 레일 x = 엘보 세로획 중심(3.5)에 정렬
 const RAIL_STROKE = 3      // 레일 두께
 const HEADER_H = 94        // 헤더(썸네일 행) 높이
 const THUMB_CENTER = HEADER_H / 2  // 썸네일 세로 중심 = 47
@@ -36,8 +36,8 @@ function CommentRow({ entry, isFirst, isLast }: { entry: CommentEntry; isFirst: 
           width: RAIL_STROKE,
           background: LINE_COLOR,
           top: isFirst ? -6 : 0,
-          // 마지막 행은 썸네일 중심까지만, 나머지는 행 끝까지
-          ...(isLast ? { height: THUMB_CENTER + 6 } : { bottom: 0 }),
+          // 마지막 행은 썸네일 중심까지만, 나머지는 다음 행까지(paddingBottom 간격 포함)
+          ...(isLast ? { height: THUMB_CENTER } : { bottom: -ROW_GAP }),
         }} />
         {/* 엘보 곡선 — 썸네일로 휘어 들어감 */}
         <img
