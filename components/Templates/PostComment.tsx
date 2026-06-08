@@ -2,22 +2,54 @@ import { FieldValues } from '@/lib/types'
 
 interface Props { values: FieldValues }
 
-function CommentItem({ name, username, text, thumbnail }: { name: string; username?: string; text: string; thumbnail?: string }) {
+interface CommentEntry {
+  company: string
+  user: string
+  text: string
+}
+
+function CommentRow({ company, user, text }: CommentEntry) {
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-      {/* Author row */}
-      <div className="flex items-center" style={{ height: 94, gap: 16 }}>
-        <div style={{ width: 56, height: 56, borderRadius: 28, background: 'rgba(163,163,163,0.3)', overflow: 'hidden', flexShrink: 0 }}>
-          {thumbnail && <img src={thumbnail} alt="" className="w-full h-full object-cover" />}
-        </div>
-        <div className="flex items-center" style={{ gap: 4 }}>
-          <p style={{ fontFamily: "'Rethink Sans', sans-serif", fontWeight: 500, fontSize: 36, color: '#e9e9e9', margin: 0, whiteSpace: 'nowrap' }}>
-            {name || '작성자'}
-          </p>
-          <p style={{ fontFamily: "'Rethink Sans', sans-serif", fontWeight: 400, fontSize: 36, color: '#c1c2c3', opacity: 0.5, margin: '0 4px' }}>∙</p>
-          <p style={{ fontFamily: "'Rethink Sans', sans-serif", fontWeight: 400, fontSize: 36, color: '#c1c2c3', margin: 0, whiteSpace: 'nowrap' }}>
-            {username || 'name'}
-          </p>
+    <div style={{ display: 'flex', flexDirection: 'column', width: '100%' }}>
+      {/* Header row */}
+      <div style={{ height: 94, display: 'flex', alignItems: 'center' }}>
+        <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
+          {/* Thumbnail */}
+          <div style={{
+            width: 56, height: 56, borderRadius: 36,
+            background: 'rgba(163,163,163,0.3)',
+            border: '1.4px solid rgba(163,163,163,0.3)',
+            overflow: 'hidden', flexShrink: 0,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+          }}>
+            <img src="/assets/logo.png" alt="" style={{ height: 20, objectFit: 'contain', opacity: 0.6 }} />
+          </div>
+          {/* Company · name */}
+          <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+            <span style={{
+              fontFamily: "'Rethink Sans', sans-serif",
+              fontWeight: 500,
+              fontSize: 36,
+              color: '#e9e9e9',
+              whiteSpace: 'nowrap',
+            }}>{company}</span>
+            <span style={{
+              fontFamily: "'Rethink Sans', sans-serif",
+              fontWeight: 400,
+              fontSize: 36,
+              color: '#c1c2c3',
+              opacity: 0.5,
+              width: 20,
+              textAlign: 'center',
+            }}>∙</span>
+            <span style={{
+              fontFamily: "'Rethink Sans', sans-serif",
+              fontWeight: 400,
+              fontSize: 36,
+              color: '#c1c2c3',
+              whiteSpace: 'nowrap',
+            }}>{user}</span>
+          </div>
         </div>
       </div>
       {/* Text */}
@@ -30,6 +62,7 @@ function CommentItem({ name, username, text, thumbnail }: { name: string; userna
         letterSpacing: '-1.08px',
         margin: 0,
         wordBreak: 'break-word',
+        width: '100%',
       }}>
         {text}
       </p>
@@ -38,43 +71,52 @@ function CommentItem({ name, username, text, thumbnail }: { name: string; userna
 }
 
 export function PostComment({ values }: Props) {
+  const entries: CommentEntry[] = [
+    {
+      company: values.origCompany || 'Google',
+      user: values.origUser || 'name',
+      text: values.origText || 'Rotating out for cheaper cost employees',
+    },
+    {
+      company: values.c1Company || 'Amazon',
+      user: values.c1User || 'name',
+      text: values.c1Text || "All the people in the comments mocking you are heartless. I've been laid off before. It was done over a teams call...My boss was cold. No emotions. No compassion.You're a good person for caring. You should reach out to your former colleagues...I'm sure they will appreciate it.",
+    },
+    ...(values.c2Company || values.c2Text ? [{
+      company: values.c2Company || '',
+      user: values.c2User || 'name',
+      text: values.c2Text || '',
+    }] : []),
+    ...(values.c3Company || values.c3Text ? [{
+      company: values.c3Company || '',
+      user: values.c3User || 'name',
+      text: values.c3Text || '',
+    }] : []),
+  ]
+
   return (
     <div className="relative" style={{ width: 1080, height: 1350, background: '#1a1a1a' }}>
-      <div className="absolute" style={{ left: 120, right: 80, top: 40, bottom: 110 }}>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: 40, width: 890 }}>
-          {/* Original post */}
-          <CommentItem
-            name={values.authorName || '작성자'}
-            username="name"
-            text={values.postBody || '원글 내용을 입력하세요.'}
-            thumbnail={values.authorThumbnail}
-          />
+      {/* Threading line — 왼쪽 스레드 */}
+      <div className="absolute" style={{ left: 45, top: 0, width: 61, height: 1089 }}>
+        <img src="/assets/thread_line.png" alt="" style={{ width: '100%', height: '100%', objectFit: 'fill' }} />
+      </div>
 
-          {/* Comment 1 */}
-          {(values.comment1 || true) && (
-            <CommentItem
-              name={values.commenter1Name || '댓글 작성자 1'}
-              username="name"
-              text={values.comment1 || '댓글 내용을 입력하세요.'}
-            />
-          )}
-
-          {/* Comment 2 */}
-          {values.comment2 && (
-            <CommentItem
-              name={values.commenter2Name || '댓글 작성자 2'}
-              username="name"
-              text={values.comment2}
-            />
-          )}
-        </div>
+      {/* Content area */}
+      <div className="absolute" style={{
+        left: 120, right: 80, top: 40, bottom: 110,
+        display: 'flex', flexDirection: 'column', gap: 40,
+        overflow: 'hidden',
+      }}>
+        {entries.map((entry, i) => (
+          <CommentRow key={i} {...entry} />
+        ))}
       </div>
 
       {/* Bottom bar */}
-      <div className="absolute bottom-0 left-0 right-0 flex items-center" style={{ height: 110, padding: '0 24px' }}>
+      <div className="absolute bottom-0 left-0 right-0 flex items-center" style={{ height: 110, paddingLeft: 24 }}>
         <img src="/assets/logo.png" alt="blind" style={{ height: 40, objectFit: 'contain' }} />
         <div className="flex-1" />
-        <img src="/assets/logo.png" alt="" style={{ width: 110, height: 110, objectFit: 'contain' }} />
+        <img src="/assets/corner_logo.png" alt="" style={{ width: 110, height: 110 }} />
       </div>
     </div>
   )

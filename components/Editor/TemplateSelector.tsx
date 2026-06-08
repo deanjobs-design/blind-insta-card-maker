@@ -6,7 +6,7 @@ import { TemplateConfig } from '@/lib/types'
 const SECTION_TABS = [
   { id: 'cover', label: '표지' },
   { id: 'post', label: '게시물' },
-  { id: 'post_comment', label: '게시물+댓글' },
+  { id: 'post_comment', label: '댓글' },
   { id: 'last_page', label: '마지막 페이지' },
 ] as const
 
