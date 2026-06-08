@@ -4,10 +4,10 @@ interface Props { values: FieldValues }
 
 export function Photo01({ values }: Props) {
   const text = values.headline || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'
+  const showSubtitle = values.showSubtitle === 'true'
 
   return (
     <div className="relative overflow-hidden" style={{ width: 1080, height: 1350, background: '#111' }}>
-      {/* Background image */}
       <img
         src={values.mainImage || '/assets/sample_image.png'}
         alt=""
@@ -25,9 +25,26 @@ export function Photo01({ values }: Props) {
         background: 'linear-gradient(to top, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0) 100%)',
       }} />
 
-      {/* Per-line highlight headline — bottom area */}
+      {/* Per-line highlight headline */}
       <div className="absolute" style={{ left: 40, right: 40, bottom: 100 }}>
-        {/* box-decoration-break: clone 으로 줄마다 배경색 */}
+        {showSubtitle && (
+          <p style={{
+            fontFamily: "'Rethink Sans', sans-serif",
+            fontWeight: 400,
+            fontSize: 40,
+            lineHeight: 1.3,
+            color: '#ffffff',
+            margin: 0,
+            marginBottom: 20,
+            wordBreak: 'break-word',
+            display: '-webkit-box',
+            WebkitLineClamp: 4,
+            WebkitBoxOrient: 'vertical' as const,
+            overflow: 'hidden',
+          }}>
+            {values.subtitle || '서브타이틀을 입력하세요'}
+          </p>
+        )}
         <p style={{
           fontFamily: "'Rethink Sans', sans-serif",
           fontWeight: 600,

@@ -72,6 +72,19 @@ export function InputPanel({ template, values, onChange, onAddToSet }: Props) {
               )}
             </div>
           )}
+          {field.type === 'toggle' && (
+            <button
+              type="button"
+              onClick={() => onChange(field.key, values[field.key] === 'true' ? 'false' : 'true')}
+              className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
+                values[field.key] === 'true' ? 'bg-blue-600' : 'bg-gray-200'
+              }`}
+            >
+              <span className={`inline-block h-4 w-4 transform rounded-full bg-white shadow transition-transform ${
+                values[field.key] === 'true' ? 'translate-x-6' : 'translate-x-1'
+              }`} />
+            </button>
+          )}
         </div>
       ))}
       <Button onClick={onAddToSet} className="mt-auto w-full">

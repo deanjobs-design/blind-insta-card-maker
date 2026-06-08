@@ -12,6 +12,7 @@ function renderRed(text: string) {
 
 export function Photo02({ values }: Props) {
   const text = values.headline || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'
+  const showSubtitle = values.showSubtitle === 'true'
 
   return (
     <div className="relative overflow-hidden" style={{ width: 1080, height: 1350, background: '#111' }}>
@@ -32,8 +33,27 @@ export function Photo02({ values }: Props) {
         background: 'linear-gradient(to top, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0) 100%)',
       }} />
 
-      {/* Centered headline */}
-      <div className="absolute left-0 right-0 flex items-end justify-center" style={{ bottom: 0, paddingBottom: 120, paddingLeft: 40, paddingRight: 40, paddingTop: 24 }}>
+      {/* Headline + optional subtitle */}
+      <div className="absolute left-0 right-0 flex flex-col items-center justify-end" style={{ bottom: 0, paddingBottom: 120, paddingLeft: 40, paddingRight: 40, gap: 20 }}>
+        {showSubtitle && (
+          <p style={{
+            fontFamily: "'Rethink Sans', sans-serif",
+            fontWeight: 400,
+            fontSize: 40,
+            lineHeight: 1.3,
+            color: '#ffffff',
+            textAlign: 'center',
+            margin: 0,
+            wordBreak: 'break-word',
+            width: '100%',
+            display: '-webkit-box',
+            WebkitLineClamp: 4,
+            WebkitBoxOrient: 'vertical' as const,
+            overflow: 'hidden',
+          }}>
+            {values.subtitle || '서브타이틀을 입력하세요'}
+          </p>
+        )}
         <p style={{
           fontFamily: "'Rethink Sans', sans-serif",
           fontWeight: 600,
@@ -44,7 +64,7 @@ export function Photo02({ values }: Props) {
           textAlign: 'center',
           margin: 0,
           wordBreak: 'break-word',
-          flex: 1,
+          width: '100%',
         }}>
           {renderRed(text)}
         </p>

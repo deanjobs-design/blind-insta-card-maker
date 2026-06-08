@@ -1,4 +1,4 @@
-export type FieldType = 'text' | 'textarea' | 'image' | 'color'
+export type FieldType = 'text' | 'textarea' | 'image' | 'color' | 'toggle'
 
 export interface TemplateField {
   key: string

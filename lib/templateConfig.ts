@@ -9,6 +9,9 @@ const textareaField = (key: string, label: string, placeholder = ''): TemplateFi
 const imageField = (key: string, label: string): TemplateField => ({
   key, label, type: 'image', required: false,
 })
+const toggleField = (key: string, label: string): TemplateField => ({
+  key, label, type: 'toggle',
+})
 
 export const TEMPLATES: TemplateConfig[] = [
   {
@@ -18,6 +21,8 @@ export const TEMPLATES: TemplateConfig[] = [
     fields: [
       imageField('mainImage', '배경 사진'),
       textareaField('headline', '헤드라인', '헤드라인 텍스트를 입력하세요'),
+      toggleField('showSubtitle', '서브타이틀'),
+      textareaField('subtitle', '서브타이틀 텍스트', '서브타이틀을 입력하세요'),
     ],
   },
   {
@@ -26,7 +31,9 @@ export const TEMPLATES: TemplateConfig[] = [
     section: 'cover',
     fields: [
       imageField('mainImage', '배경 사진'),
-      textareaField('headline', '헤드라인', '헤드라인 텍스트를 입력하세요'),
+      textareaField('headline', '헤드라인 ([텍스트] = 강조)', '헤드라인 텍스트를 입력하세요'),
+      toggleField('showSubtitle', '서브타이틀'),
+      textareaField('subtitle', '서브타이틀 텍스트', '서브타이틀을 입력하세요'),
     ],
   },
   {
@@ -62,6 +69,7 @@ export const TEMPLATES: TemplateConfig[] = [
     section: 'cover',
     fields: [
       textareaField('quote', '인용구', '"큰따옴표 안의 텍스트"'),
+      toggleField('showChannelInfo', '채널 정보 표시'),
       textField('channelName', '채널명', '채널 이름'),
       textField('occupation', '직책/소속', '직책 또는 소속'),
       imageField('channelThumbnail', '채널 썸네일'),

@@ -3,6 +3,7 @@ import { FieldValues } from '@/lib/types'
 interface Props { values: FieldValues }
 
 export function Text02({ values }: Props) {
+  const showChannelInfo = values.showChannelInfo === 'true'
   return (
     <div className="relative overflow-hidden" style={{ width: 1080, height: 1350, background: 'black' }}>
       {/* 고정: 빨간 그라데이션 배경 텍스처 */}
@@ -41,33 +42,35 @@ export function Text02({ values }: Props) {
         </p>
       </div>
 
-      {/* 편집: 채널 정보 — 하단에서 80pt 위 */}
-      <div className="absolute flex items-center" style={{ left: 80, bottom: 80, gap: 20 }}>
-        <div style={{
-          width: 96, height: 96, borderRadius: 48,
-          overflow: 'hidden', background: 'rgba(255,255,255,0.2)', flexShrink: 0,
-        }}>
-          {values.channelThumbnail && (
-            <img src={values.channelThumbnail} alt="" className="w-full h-full object-cover" />
-          )}
-        </div>
-        <div>
-          <p style={{
-            fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
-            fontWeight: 600, fontSize: 38, color: 'white',
-            letterSpacing: '0.76px', margin: 0, lineHeight: 1.2,
+      {/* 편집: 채널 정보 — 토글 ON일 때만 표시 */}
+      {showChannelInfo && (
+        <div className="absolute flex items-center" style={{ left: 80, bottom: 80, gap: 20 }}>
+          <div style={{
+            width: 96, height: 96, borderRadius: 48,
+            overflow: 'hidden', background: 'rgba(255,255,255,0.2)', flexShrink: 0,
           }}>
-            {values.channelName || 'Tech Industry'}
-          </p>
-          <p style={{
-            fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
-            fontWeight: 400, fontSize: 30, color: '#bec1c5',
-            letterSpacing: '0.6px', margin: 0,
-          }}>
-            {values.occupation || 'Ex-Amazon'}
-          </p>
+            {values.channelThumbnail && (
+              <img src={values.channelThumbnail} alt="" className="w-full h-full object-cover" />
+            )}
+          </div>
+          <div>
+            <p style={{
+              fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
+              fontWeight: 600, fontSize: 38, color: 'white',
+              letterSpacing: '0.76px', margin: 0, lineHeight: 1.2,
+            }}>
+              {values.channelName || 'Tech Industry'}
+            </p>
+            <p style={{
+              fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
+              fontWeight: 400, fontSize: 30, color: '#bec1c5',
+              letterSpacing: '0.6px', margin: 0,
+            }}>
+              {values.occupation || 'Ex-Amazon'}
+            </p>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   )
 }
