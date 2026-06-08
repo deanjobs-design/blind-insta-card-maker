@@ -1,6 +1,7 @@
 'use client'
 import { useState, useRef, useCallback } from 'react'
 import { TemplateSelector, CommentPageItem } from '@/components/Editor/TemplateSelector'
+import { TemplateGallery } from '@/components/Editor/TemplateGallery'
 import { InputPanel } from '@/components/Editor/InputPanel'
 import { PreviewPanel } from '@/components/Editor/PreviewPanel'
 import { DownloadBar } from '@/components/Editor/DownloadBar'
@@ -9,7 +10,7 @@ import { TemplateRenderer } from '@/components/Templates/TemplateRenderer'
 import { TemplateConfig, FieldValues, CardItem } from '@/lib/types'
 import { captureCard } from '@/lib/exportCard'
 import { downloadZip, downloadSinglePng } from '@/lib/createZip'
-import { getTemplate } from '@/lib/templateConfig'
+import { getTemplate, getSectionTemplates } from '@/lib/templateConfig'
 
 const TEMPLATE_DEFAULTS: Record<string, Record<string, string>> = {
   text_02: { showChannelInfo: 'true' },
@@ -33,6 +34,7 @@ export default function Home() {
   const [sharedCoverImage, setSharedCoverImage] = useState<string>('')
   const [isDownloadingPng, setIsDownloadingPng] = useState(false)
   const [showOverview, setShowOverview] = useState(false)
+  const [activeSection, setActiveSection] = useState<string>('all') // 'all'이면 템플릿 갤러리
   const renderRef = useRef<HTMLDivElement>(null)
   const currentRenderRef = useRef<HTMLDivElement>(null)
 
@@ -56,6 +58,31 @@ export default function Home() {
       setFieldValues({ ...base, ...(TEMPLATE_DEFAULTS[t.id] ?? {}) })
     }
   }, [sharedCoverImage])
+
+  // 섹션 탭 클릭 — 'all'은 갤러리, 나머지는 해당 섹션 첫 템플릿 선택
+  const handleSectionChange = useCallback((sectionId: string) => {
+    setActiveSection(sectionId)
+    if (sectionId === 'all') return
+    if (sectionId === 'post_comment') {
+      if (commentPages.length > 0) setActiveCommentPageId(commentPages[0].id)
+      const t = getTemplate('post_comment')
+      if (t) setSelectedTemplate(t)
+    } else {
+      const first = getSectionTemplates(sectionId as TemplateConfig['section'])[0]
+      if (first) handleTemplateSelect(first)
+    }
+  }, [commentPages, handleTemplateSelect])
+
+  // 갤러리에서 템플릿 선택 → 편집으로 전환
+  const handleGallerySelect = useCallback((t: TemplateConfig) => {
+    setActiveSection(t.section)
+    if (t.section === 'post_comment') {
+      if (commentPages.length > 0) setActiveCommentPageId(commentPages[0].id)
+      setSelectedTemplate(t)
+    } else {
+      handleTemplateSelect(t)
+    }
+  }, [commentPages, handleTemplateSelect])
 
   const handleSelectCommentPage = useCallback((id: string) => {
     setActiveCommentPageId(id)
@@ -174,6 +201,8 @@ export default function Home() {
       <TemplateSelector
         selectedId={selectedTemplate?.id ?? ''}
         onSelect={handleTemplateSelect}
+        activeSection={activeSection}
+        onSectionChange={handleSectionChange}
         commentPages={commentPages}
         activeCommentPageId={activeCommentPageId}
         onSelectCommentPage={handleSelectCommentPage}
@@ -181,24 +210,31 @@ export default function Home() {
         onRemoveCommentPage={handleRemoveCommentPage}
       />
 
-      <div className="flex gap-4 flex-1 min-h-0 p-4">
-        <div className="w-72 flex-shrink-0 min-h-0 overflow-y-auto">
-          <InputPanel
-            template={selectedTemplate}
-            values={activeValues}
-            onChange={handleFieldChange}
-            onAddToSet={handleAddToSet}
-            onDownloadPng={handleDownloadPng}
-            isDownloadingPng={isDownloadingPng}
-          />
+      {activeSection === 'all' ? (
+        /* 전체 템플릿 갤러리 — 입력 전 모든 템플릿 선택 */
+        <div className="flex-1 min-h-0">
+          <TemplateGallery onSelect={handleGallerySelect} />
         </div>
-        <div className="flex-1 min-h-0 min-w-0">
-          <PreviewPanel
-            templateId={selectedTemplate?.id ?? null}
-            values={activeValues}
-          />
+      ) : (
+        <div className="flex gap-4 flex-1 min-h-0 p-4">
+          <div className="w-72 flex-shrink-0 min-h-0 overflow-y-auto">
+            <InputPanel
+              template={selectedTemplate}
+              values={activeValues}
+              onChange={handleFieldChange}
+              onAddToSet={handleAddToSet}
+              onDownloadPng={handleDownloadPng}
+              isDownloadingPng={isDownloadingPng}
+            />
+          </div>
+          <div className="flex-1 min-h-0 min-w-0">
+            <PreviewPanel
+              templateId={selectedTemplate?.id ?? null}
+              values={activeValues}
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="flex-shrink-0 px-4 pb-4">
         <DownloadBar

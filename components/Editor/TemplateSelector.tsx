@@ -1,9 +1,9 @@
 'use client'
-import { useState } from 'react'
 import { getSectionTemplates } from '@/lib/templateConfig'
 import { TemplateConfig } from '@/lib/types'
 
 const SECTION_TABS = [
+  { id: 'all', label: '전체' },
   { id: 'cover', label: '표지' },
   { id: 'post', label: '게시물' },
   { id: 'post_comment', label: '댓글' },
@@ -18,6 +18,8 @@ export interface CommentPageItem {
 interface Props {
   selectedId: string
   onSelect: (template: TemplateConfig) => void
+  activeSection: string
+  onSectionChange: (sectionId: string) => void
   // 댓글 멀티페이지
   commentPages: CommentPageItem[]
   activeCommentPageId: string
@@ -28,27 +30,13 @@ interface Props {
 
 export function TemplateSelector({
   selectedId, onSelect,
+  activeSection, onSectionChange,
   commentPages, activeCommentPageId,
   onSelectCommentPage, onAddCommentPage, onRemoveCommentPage,
 }: Props) {
-  const [activeSection, setActiveSection] = useState<string>('cover')
-
-  const handleSectionClick = (sectionId: string) => {
-    setActiveSection(sectionId)
-    if (sectionId === 'post_comment') {
-      // 첫 번째 댓글 페이지 선택
-      if (commentPages.length > 0) {
-        onSelectCommentPage(commentPages[0].id)
-      }
-      const t = getSectionTemplates('post_comment')[0]
-      if (t) onSelect(t)
-    } else {
-      const first = getSectionTemplates(sectionId as TemplateConfig['section'])[0]
-      if (first) onSelect(first)
-    }
-  }
-
-  const templates = getSectionTemplates(activeSection as TemplateConfig['section'])
+  const templates = activeSection === 'all' || activeSection === 'last_page' || activeSection === 'post' || activeSection === 'post_comment' || activeSection === 'cover'
+    ? getSectionTemplates(activeSection as TemplateConfig['section'])
+    : []
 
   return (
     <div className="bg-white border-b border-gray-200 px-6 py-0 flex-shrink-0">
@@ -57,7 +45,7 @@ export function TemplateSelector({
         {SECTION_TABS.map(tab => (
           <button
             key={tab.id}
-            onClick={() => handleSectionClick(tab.id)}
+            onClick={() => onSectionChange(tab.id)}
             className={`px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
               activeSection === tab.id
                 ? 'border-blue-600 text-blue-600'
@@ -69,8 +57,9 @@ export function TemplateSelector({
         ))}
       </div>
 
-      {/* 댓글 섹션: 페이지 서브탭 */}
-      {activeSection === 'post_comment' ? (
+      {/* 전체 탭: 칩 줄 숨김 (갤러리는 본문에서 렌더) */}
+      {activeSection === 'all' ? null : activeSection === 'post_comment' ? (
+        /* 댓글 섹션: 페이지 서브탭 */
         <div className="flex gap-2 py-2 overflow-x-auto items-center" style={{ scrollbarWidth: 'none' }}>
           {commentPages.map(page => (
             <div key={page.id} className="flex items-center gap-1 flex-shrink-0">
