@@ -94,8 +94,8 @@ export const TEMPLATES: TemplateConfig[] = [
     name: '블라인드 게시물',
     section: 'post',
     fields: [
-      textField('channelName', '채널명', '채널 이름'),
-      imageField('channelThumbnail', '채널 썸네일'),
+      textField('channelName', '회사명', 'Amazon'),
+      imageField('channelThumbnail', '회사 썸네일'),
       textareaField('body', '게시물 본문', '게시물 내용을 입력하세요'),
     ],
   },

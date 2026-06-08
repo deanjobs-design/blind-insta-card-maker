@@ -6,7 +6,7 @@ export function Post({ values }: Props) {
   return (
     <div className="relative" style={{ width: 1080, height: 1350, background: '#1a1a1a' }}>
       <div className="absolute" style={{ left: 60, right: 60, top: 80, bottom: 110 }}>
-        {/* Channel header */}
+        {/* Company header */}
         <div className="flex items-center" style={{ gap: 16, marginBottom: 32 }}>
           <div style={{ width: 72, height: 72, borderRadius: 36, background: 'rgba(163,163,163,0.3)', overflow: 'hidden', flexShrink: 0 }}>
             {values.channelThumbnail && (
@@ -21,7 +21,7 @@ export function Post({ values }: Props) {
               color: '#e9e9e9',
               lineHeight: 1.2,
             }}>
-              {values.channelName || '채널명'}
+              {values.channelName || 'Amazon'}
             </span>
             <span style={{
               fontFamily: "'Rethink Sans', sans-serif",
@@ -31,7 +31,7 @@ export function Post({ values }: Props) {
               lineHeight: 1.2,
               marginLeft: 8,
             }}>
-              said
+              employee said
             </span>
           </div>
         </div>
@@ -48,7 +48,7 @@ export function Post({ values }: Props) {
           wordBreak: 'break-word',
           whiteSpace: 'pre-wrap',
         }}>
-          {values.body || '게시물 내용을 입력하세요.'}
+          {values.body || "Some of these people think they can entirely build things just through vibecoding, and while I know that is possible, I find it a bit concerning how little some of these people know about the actual code that is going into building what they want to build. I've seen people vibe code and build things without really understanding any of the mechanics of how anything is doing anything... Does anyone else find this concerning?"}
         </p>
       </div>
 
@@ -56,7 +56,7 @@ export function Post({ values }: Props) {
       <div className="absolute bottom-0 left-0 right-0 flex items-center" style={{ height: 110, padding: '0 24px' }}>
         <img src="/assets/logo.png" alt="blind" style={{ height: 40, objectFit: 'contain' }} />
         <div className="flex-1" />
-        <img src="/assets/logo.png" alt="" style={{ width: 110, height: 110, objectFit: 'contain' }} />
+        <img src="/assets/corner_logo.png" alt="" style={{ width: 110, height: 110 }} />
       </div>
     </div>
   )
