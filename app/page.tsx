@@ -15,9 +15,14 @@ const TEMPLATE_DEFAULTS: Record<string, Record<string, string>> = {
   photo_text_02: { showBody: 'true' },
 }
 
+// 댓글 페이지 기본값 — 댓글2, 댓글3 표시 ON
+const COMMENT_DEFAULTS: FieldValues = { showC2: 'true', showC3: 'true' }
+
 function makeCommentPage(idx: number): CommentPageItem {
   return { id: crypto.randomUUID(), label: `댓글${idx}` }
 }
+
+const INITIAL_COMMENT_PAGE = makeCommentPage(1)
 
 export default function Home() {
   const [selectedTemplate, setSelectedTemplate] = useState<TemplateConfig | null>(getTemplate('photo_01') ?? null)
@@ -28,14 +33,16 @@ export default function Home() {
   const renderRef = useRef<HTMLDivElement>(null)
 
   // 댓글 멀티페이지 상태
-  const [commentPages, setCommentPages] = useState<CommentPageItem[]>([makeCommentPage(1)])
-  const [activeCommentPageId, setActiveCommentPageId] = useState<string>(commentPages[0].id)
-  const [commentPageValues, setCommentPageValues] = useState<Record<string, FieldValues>>({})
+  const [commentPages, setCommentPages] = useState<CommentPageItem[]>([INITIAL_COMMENT_PAGE])
+  const [activeCommentPageId, setActiveCommentPageId] = useState<string>(INITIAL_COMMENT_PAGE.id)
+  const [commentPageValues, setCommentPageValues] = useState<Record<string, FieldValues>>({
+    [INITIAL_COMMENT_PAGE.id]: { ...COMMENT_DEFAULTS },
+  })
 
   // 현재 활성 fieldValues — 댓글 섹션이면 commentPageValues 사용
   const isCommentSection = selectedTemplate?.section === 'post_comment'
   const activeValues = isCommentSection
-    ? (commentPageValues[activeCommentPageId] ?? {})
+    ? (commentPageValues[activeCommentPageId] ?? COMMENT_DEFAULTS)
     : fieldValues
 
   const handleTemplateSelect = useCallback((t: TemplateConfig) => {
@@ -54,12 +61,12 @@ export default function Home() {
 
   const handleAddCommentPage = useCallback(() => {
     setCommentPages(prev => {
-      const next = [...prev, makeCommentPage(prev.length + 1)]
-      const newPage = next[next.length - 1]
+      const newPage = makeCommentPage(prev.length + 1)
       setActiveCommentPageId(newPage.id)
+      setCommentPageValues(vals => ({ ...vals, [newPage.id]: { ...COMMENT_DEFAULTS } }))
       const t = getTemplate('post_comment')
       if (t) setSelectedTemplate(t)
-      return next
+      return [...prev, newPage]
     })
   }, [])
 

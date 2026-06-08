@@ -104,10 +104,12 @@ function CommentRow({ entry, isFirst, isLast }: { entry: CommentEntry; isFirst: 
 
 export function PostComment({ values }: Props) {
   const slots: CommentEntry[] = [
+    // 댓글1 — 항상 표시
     { logo: values.c1Logo, company: values.c1Company || 'Google', text: values.c1Text || 'Rotating out for cheaper cost employees' },
-    { logo: values.c2Logo, company: values.c2Company || 'Amazon', text: values.c2Text || "All the people in the comments mocking you are heartless. I've been laid off before. It was done over a teams call...My boss was cold. No emotions. No compassion.You're a good person for caring. You should reach out to your former colleagues...I'm sure they will appreciate it." },
-    ...(values.c3Company || values.c3Text ? [{ logo: values.c3Logo, company: values.c3Company || '', text: values.c3Text || '' }] : []),
-    ...(values.c4Company || values.c4Text ? [{ logo: values.c4Logo, company: values.c4Company || '', text: values.c4Text || '' }] : []),
+    // 댓글2~4 — 토글 ON일 때만
+    ...(values.showC2 === 'true' ? [{ logo: values.c2Logo, company: values.c2Company || 'Amazon', text: values.c2Text || "All the people in the comments mocking you are heartless. I've been laid off before. It was done over a teams call...My boss was cold. No emotions. No compassion.You're a good person for caring. You should reach out to your former colleagues...I'm sure they will appreciate it." }] : []),
+    ...(values.showC3 === 'true' ? [{ logo: values.c3Logo, company: values.c3Company || 'Meta', text: values.c3Text || 'umm...' }] : []),
+    ...(values.showC4 === 'true' ? [{ logo: values.c4Logo, company: values.c4Company || '', text: values.c4Text || '' }] : []),
   ]
 
   return (
