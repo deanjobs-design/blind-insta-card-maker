@@ -54,7 +54,7 @@ export default function Home() {
   const handleTemplateSelect = useCallback((t: TemplateConfig) => {
     setSelectedTemplate(t)
     if (t.section !== 'post_comment') {
-      const base = t.section === 'cover' && sharedCoverImage ? { mainImage: sharedCoverImage } : {}
+      const base: FieldValues = t.section === 'cover' && sharedCoverImage ? { mainImage: sharedCoverImage } : {}
       setFieldValues({ ...base, ...(TEMPLATE_DEFAULTS[t.id] ?? {}) })
     }
   }, [sharedCoverImage])
