@@ -3,8 +3,9 @@ import { FieldValues } from '@/lib/types'
 interface Props { values: FieldValues }
 
 export function PhotoComment({ values }: Props) {
+  const height = values.tallRatio === 'true' ? 1920 : 1350
   return (
-    <div className="relative overflow-hidden" style={{ width: 1080, height: 1350, background: '#111' }}>
+    <div className="relative overflow-hidden" style={{ width: 1080, height, background: '#111' }}>
       <img
         src={values.mainImage || '/assets/sample_image.png'}
         alt=""

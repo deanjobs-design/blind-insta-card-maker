@@ -2,9 +2,9 @@
 import { useEffect, useRef, useState } from 'react'
 import { TemplateRenderer } from '@/components/Templates/TemplateRenderer'
 import { FieldValues } from '@/lib/types'
+import { getCardHeight } from '@/lib/exportCard'
 
 const CARD_W = 1080
-const CARD_H = 1350
 
 interface Props {
   templateId: string | null
@@ -13,19 +13,23 @@ interface Props {
 
 export function PreviewPanel({ templateId, values }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
-  const [scale, setScale] = useState(0.3)
+  const [box, setBox] = useState({ w: 0, h: 0 })
+
+  const CARD_H = templateId ? getCardHeight(templateId, values) : 1350
 
   useEffect(() => {
     if (!containerRef.current) return
     const observer = new ResizeObserver(entries => {
       const { width, height } = entries[0].contentRect
-      const scaleW = width / CARD_W
-      const scaleH = height / CARD_H
-      setScale(Math.min(scaleW, scaleH) * 0.95)
+      setBox({ w: width, h: height })
     })
     observer.observe(containerRef.current)
     return () => observer.disconnect()
   }, [])
+
+  const scale = box.w && box.h
+    ? Math.min(box.w / CARD_W, box.h / CARD_H) * 0.95
+    : 0.3
 
   if (!templateId) {
     return (

@@ -22,6 +22,7 @@ export const TEMPLATES: TemplateConfig[] = [
     name: '사진형 A',
     section: 'cover',
     fields: [
+      toggleField('tallRatio', '세로 1080×1920'),
       imageField('mainImage', '배경 사진'),
       textareaField('headline', '헤드라인', '헤드라인 텍스트를 입력하세요'),
       toggleField('showSubtitle', '서브타이틀'),
@@ -33,6 +34,7 @@ export const TEMPLATES: TemplateConfig[] = [
     name: '사진형 B',
     section: 'cover',
     fields: [
+      toggleField('tallRatio', '세로 1080×1920'),
       imageField('mainImage', '배경 사진'),
       textareaField('headline', '헤드라인 ([텍스트] = 강조)', '헤드라인 텍스트를 입력하세요'),
       toggleField('showSubtitle', '서브타이틀'),
@@ -84,6 +86,7 @@ export const TEMPLATES: TemplateConfig[] = [
     name: '사진+게시물형',
     section: 'cover',
     fields: [
+      toggleField('tallRatio', '세로 1080×1920'),
       imageField('mainImage', '배경 사진'),
       imageField('channelThumbnail', '채널 로고'),
       textField('channelName', '채널명'),

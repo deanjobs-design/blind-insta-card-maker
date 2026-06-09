@@ -8,7 +8,7 @@ import { DownloadBar } from '@/components/Editor/DownloadBar'
 import { CardSetRenderer } from '@/components/Editor/CardSetRenderer'
 import { TemplateRenderer } from '@/components/Templates/TemplateRenderer'
 import { TemplateConfig, FieldValues, CardItem } from '@/lib/types'
-import { captureCard } from '@/lib/exportCard'
+import { captureCard, getCardHeight } from '@/lib/exportCard'
 import { downloadZip, downloadSinglePng } from '@/lib/createZip'
 import { getTemplate, getSectionTemplates } from '@/lib/templateConfig'
 
@@ -157,12 +157,12 @@ export default function Home() {
     try {
       const el = currentRenderRef.current.querySelector('[data-current-card]') as HTMLElement
       if (!el) return
-      const dataUrl = await captureCard(el)
+      const dataUrl = await captureCard(el, getCardHeight(selectedTemplate.id, activeValues))
       await downloadSinglePng(dataUrl, `${selectedTemplate.id}.png`)
     } finally {
       setIsDownloadingPng(false)
     }
-  }, [selectedTemplate])
+  }, [selectedTemplate, activeValues])
 
   const handleDownload = useCallback(async () => {
     if (!renderRef.current || cardSet.length === 0) return
@@ -174,7 +174,7 @@ export default function Home() {
         const el = cardEls[i] as HTMLElement
         const cardId = el.getAttribute('data-card-id')!
         const card = cardSet.find(c => c.id === cardId)!
-        const dataUrl = await captureCard(el)
+        const dataUrl = await captureCard(el, getCardHeight(card.templateId, card.values))
         entries.push({
           filename: `${String(i + 1).padStart(2, '0')}_${card.templateId}.png`,
           dataUrl,
@@ -189,7 +189,7 @@ export default function Home() {
   return (
     <main className="flex flex-col bg-gray-100 overflow-hidden" style={{ height: '100dvh' }}>
       <header className="bg-white border-b border-gray-200 px-8 py-4 flex-shrink-0 flex items-center justify-between">
-        <h1 className="text-xl font-bold text-gray-900">블라인드 카드 메이커</h1>
+        <h1 className="text-xl font-bold text-gray-900">블라인드 인스타 카드 메이커</h1>
         <button
           onClick={() => setShowOverview(true)}
           className="px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
@@ -250,7 +250,7 @@ export default function Home() {
       {/* 현재 카드 풀사이즈 렌더 (PNG 즉시 다운로드용, 화면 밖) */}
       <div ref={currentRenderRef} className="absolute -left-[99999px] top-0 pointer-events-none">
         {selectedTemplate && (
-          <div data-current-card style={{ width: 1080, height: 1350 }}>
+          <div data-current-card style={{ width: 1080, height: getCardHeight(selectedTemplate.id, activeValues) }}>
             <TemplateRenderer templateId={selectedTemplate.id} values={activeValues} />
           </div>
         )}

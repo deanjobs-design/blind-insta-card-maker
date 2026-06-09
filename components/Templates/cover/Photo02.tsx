@@ -13,9 +13,10 @@ function renderRed(text: string) {
 export function Photo02({ values }: Props) {
   const text = values.headline || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'
   const showSubtitle = values.showSubtitle === 'true'
+  const height = values.tallRatio === 'true' ? 1920 : 1350
 
   return (
-    <div className="relative overflow-hidden" style={{ width: 1080, height: 1350, background: '#111' }}>
+    <div className="relative overflow-hidden" style={{ width: 1080, height, background: '#111' }}>
       <img
         src={values.mainImage || '/assets/sample_image.png'}
         alt=""
