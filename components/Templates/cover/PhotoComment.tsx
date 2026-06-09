@@ -23,11 +23,11 @@ export function PhotoComment({ values }: Props) {
         background: 'linear-gradient(to top, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0) 100%)',
       }} />
 
-      {/* Post card */}
+      {/* Post card — 9:16일 때 하단 여백 2배 */}
       <div className="absolute" style={{
         left: 80,
         right: 80,
-        bottom: 81,
+        bottom: height === 1920 ? 162 : 81,
         background: 'white',
         borderRadius: 40,
         overflow: 'hidden',

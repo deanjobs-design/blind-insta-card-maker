@@ -35,7 +35,7 @@ export function Photo02({ values }: Props) {
       }} />
 
       {/* Headline + subtitle (헤드라인 아래) */}
-      <div className="absolute left-0 right-0 flex flex-col items-center justify-end" style={{ bottom: 0, paddingBottom: 120, paddingLeft: 40, paddingRight: 40, gap: 20 }}>
+      <div className="absolute left-0 right-0 flex flex-col items-center justify-end" style={{ bottom: 0, paddingBottom: height === 1920 ? 240 : 120, paddingLeft: 40, paddingRight: 40, gap: 20 }}>
         <p style={{
           fontFamily: "'Rethink Sans', sans-serif",
           fontWeight: 600,

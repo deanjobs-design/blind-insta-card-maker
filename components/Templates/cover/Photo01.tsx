@@ -26,8 +26,8 @@ export function Photo01({ values }: Props) {
         background: 'linear-gradient(to top, rgba(0,0,0,0.85) 20%, rgba(0,0,0,0) 100%)',
       }} />
 
-      {/* Headline + subtitle (헤드라인 아래) */}
-      <div className="absolute flex flex-col" style={{ left: 40, right: 40, bottom: 100, gap: 20 }}>
+      {/* Headline + subtitle (헤드라인 아래) — 9:16일 때 하단 여백 2배 */}
+      <div className="absolute flex flex-col" style={{ left: 40, right: 40, bottom: height === 1920 ? 200 : 100, gap: 20 }}>
         <p style={{
           fontFamily: "'Rethink Sans', sans-serif",
           fontWeight: 600,
