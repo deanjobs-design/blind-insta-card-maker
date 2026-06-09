@@ -150,6 +150,16 @@ export default function Home() {
     setCardSet(prev => prev.filter(c => c.id !== id))
   }, [])
 
+  // 드래그로 세트 순서 변경
+  const handleReorder = useCallback((from: number, to: number) => {
+    setCardSet(prev => {
+      const next = [...prev]
+      const [moved] = next.splice(from, 1)
+      next.splice(to, 0, moved)
+      return next
+    })
+  }, [])
+
   // 현재 카드를 바로 PNG로 다운로드 (세트에 추가하지 않음)
   const handleDownloadPng = useCallback(async () => {
     if (!currentRenderRef.current || !selectedTemplate) return
@@ -240,6 +250,7 @@ export default function Home() {
         <DownloadBar
           cards={cardSet}
           onRemove={handleRemoveFromSet}
+          onReorder={handleReorder}
           onDownload={handleDownload}
           isDownloading={isDownloading}
         />
