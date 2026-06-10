@@ -60,11 +60,18 @@ export function InputPanel({ template, values, onChange, onAddToSet, onDownloadP
           {field.type === 'image' && (
             <div className="flex flex-col gap-2">
               <input
+                id={`file-${field.key}`}
                 type="file"
                 accept="image/*"
                 onChange={e => handleImageChange(field.key, e)}
-                className="text-sm text-gray-500 file:mr-3 file:py-1 file:px-3 file:rounded file:border-0 file:bg-gray-100 file:text-sm file:font-medium hover:file:bg-gray-200"
+                className="hidden"
               />
+              <label
+                htmlFor={`file-${field.key}`}
+                className="cursor-pointer inline-flex items-center justify-center gap-1 px-3 py-2 rounded-lg border border-gray-300 bg-gray-50 text-sm font-medium text-gray-700 hover:bg-gray-100 hover:border-gray-400 transition-colors"
+              >
+                📎 {values[field.key] ? '이미지 변경하기' : '이미지 첨부하기'}
+              </label>
               {values[field.key] && (
                 <img
                   src={values[field.key]}

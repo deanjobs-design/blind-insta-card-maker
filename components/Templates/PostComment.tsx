@@ -68,21 +68,21 @@ function CommentRow({ entry, isFirst, isLast }: { entry: CommentEntry; isFirst: 
               border: '1.4px solid rgba(163,163,163,0.3)',
               overflow: 'hidden', flexShrink: 0,
             }}>
-              {entry.logo ? (
-                <img src={entry.logo} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              ) : (
-                <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  <img src="/assets/logo.png" alt="" style={{ height: 20, objectFit: 'contain', opacity: 0.5 }} />
-                </div>
-              )}
+              <img
+                src={entry.logo || '/assets/comment_thumbnail.png'}
+                alt=""
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
             </div>
             <span style={{
               fontFamily: "'Rethink Sans', sans-serif",
               fontWeight: 500,
               fontSize: 36,
-              color: '#e9e9e9',
               whiteSpace: 'nowrap',
-            }}>{entry.company}</span>
+            }}>
+              <span style={{ color: '#989A9E' }}>Employee from </span>
+              <span style={{ color: '#e9e9e9' }}>{entry.company}</span>
+            </span>
           </div>
         </div>
         {/* Comment text */}
