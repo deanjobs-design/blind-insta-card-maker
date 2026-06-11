@@ -23,6 +23,19 @@ export function InputPanel({ template, values, onChange, onAddToSet, onDownloadP
   function handleImageChange(key: string, e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0]
     if (!file) return
+    // 실제 이미지 타입 검증 (확장자/UI 힌트가 아닌 MIME 기준)
+    if (!file.type.startsWith('image/')) {
+      alert('이미지 파일만 업로드할 수 있어요.')
+      e.target.value = ''
+      return
+    }
+    // 크기 제한 (15MB) — 과도한 메모리 사용 방지
+    const MAX_BYTES = 15 * 1024 * 1024
+    if (file.size > MAX_BYTES) {
+      alert('이미지 크기는 15MB 이하만 가능해요.')
+      e.target.value = ''
+      return
+    }
     const reader = new FileReader()
     reader.onload = ev => onChange(key, ev.target?.result as string)
     reader.readAsDataURL(file)
