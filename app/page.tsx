@@ -2,7 +2,6 @@
 import { useState, useRef, useCallback } from 'react'
 import { TemplateSelector, CommentPageItem } from '@/components/Editor/TemplateSelector'
 import { TemplateGallery } from '@/components/Editor/TemplateGallery'
-import { SignOutButton } from '@/components/SignOutButton'
 import { InputPanel } from '@/components/Editor/InputPanel'
 import { PreviewPanel } from '@/components/Editor/PreviewPanel'
 import { DownloadBar } from '@/components/Editor/DownloadBar'
@@ -204,15 +203,12 @@ export default function Home() {
           <h1 className="text-xl font-bold text-gray-900">블라인드 SNS 카드 메이커</h1>
           <span className="text-xs text-gray-400">관리 및 문의: deanjobs</span>
         </div>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setShowOverview(true)}
-            className="px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
-          >
-            ⊞ 전체 보기
-          </button>
-          <SignOutButton />
-        </div>
+        <button
+          onClick={() => setShowOverview(true)}
+          className="px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
+        >
+          ⊞ 전체 보기
+        </button>
       </header>
 
       <TemplateSelector
