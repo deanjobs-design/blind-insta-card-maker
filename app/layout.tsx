@@ -9,7 +9,7 @@ const rethinkSans = Rethink_Sans({
 })
 
 export const metadata: Metadata = {
-  title: '블라인드 인스타 카드 메이커',
+  title: '블라인드 SNS 카드 메이커',
   description: '인스타그램 카드 템플릿 자동화',
 }
 

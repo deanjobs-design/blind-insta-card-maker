@@ -199,7 +199,10 @@ export default function Home() {
   return (
     <main className="flex flex-col bg-gray-100 overflow-hidden" style={{ height: '100dvh' }}>
       <header className="bg-white border-b border-gray-200 px-8 py-4 flex-shrink-0 flex items-center justify-between">
-        <h1 className="text-xl font-bold text-gray-900">블라인드 인스타 카드 메이커</h1>
+        <div className="flex items-baseline gap-2">
+          <h1 className="text-xl font-bold text-gray-900">블라인드 SNS 카드 메이커</h1>
+          <span className="text-xs text-gray-400">관리 및 문의: deanjobs</span>
+        </div>
         <button
           onClick={() => setShowOverview(true)}
           className="px-4 py-2 rounded-lg text-sm font-medium bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors"
