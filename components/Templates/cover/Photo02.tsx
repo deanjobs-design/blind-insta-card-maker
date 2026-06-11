@@ -1,4 +1,5 @@
 import { FieldValues } from '@/lib/types'
+import { renderBolder } from '@/lib/renderHighlight'
 
 interface Props { values: FieldValues }
 
@@ -66,7 +67,7 @@ export function Photo02({ values }: Props) {
             WebkitBoxOrient: 'vertical' as const,
             overflow: 'hidden',
           }}>
-            {values.subtitle || 'Join it with eyes wide open. I have seen people get 2-3 months to prove their value and then cut'}
+            {renderBolder(values.subtitle || 'Join it with eyes wide open. I have seen people get 2-3 months to prove their value and then cut')}
           </p>
         )}
       </div>
