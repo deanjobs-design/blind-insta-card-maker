@@ -57,7 +57,7 @@ export function Photo01({ values }: Props) {
           fontFamily: "'Libre Baskerville', serif",
           fontWeight: 700,
           fontSize: 96,
-          lineHeight: 1.4,
+          lineHeight: 1.3,
           color: 'white',
           margin: 0,
           wordBreak: 'break-word',
