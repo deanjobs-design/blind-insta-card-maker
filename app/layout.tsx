@@ -1,11 +1,17 @@
 import type { Metadata } from 'next'
-import { Rethink_Sans } from 'next/font/google'
+import { Rethink_Sans, Libre_Baskerville } from 'next/font/google'
 import './globals.css'
 
 const rethinkSans = Rethink_Sans({
   subsets: ['latin'],
   weight: ['400', '500', '600', '700', '800'],
   variable: '--font-rethink-sans',
+})
+
+const libreBaskerville = Libre_Baskerville({
+  subsets: ['latin'],
+  weight: ['400', '700'],
+  variable: '--font-libre-baskerville',
 })
 
 export const metadata: Metadata = {
@@ -16,7 +22,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko">
-      <body className={rethinkSans.variable}>{children}</body>
+      <body className={`${rethinkSans.variable} ${libreBaskerville.variable}`}>{children}</body>
     </html>
   )
 }

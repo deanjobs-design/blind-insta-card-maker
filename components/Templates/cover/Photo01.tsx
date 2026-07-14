@@ -3,8 +3,32 @@ import { renderBolder } from '@/lib/renderHighlight'
 
 interface Props { values: FieldValues }
 
+// [텍스트] → 빨간 박스 하이라이트(글자 뒤 배경), 나머지 → 흰색 일반 텍스트
+function renderBoxHighlight(text: string) {
+  return text.split(/(\[.*?\])/g).map((part, i) => {
+    if (part.startsWith('[') && part.endsWith(']')) {
+      return (
+        <span
+          key={i}
+          style={{
+            background: '#f44c4f',
+            color: 'white',
+            padding: '0 18px 6px 18px',
+            borderRadius: 12,
+            boxDecorationBreak: 'clone',
+            WebkitBoxDecorationBreak: 'clone',
+          } as React.CSSProperties}
+        >
+          {part.slice(1, -1)}
+        </span>
+      )
+    }
+    return <span key={i}>{part}</span>
+  })
+}
+
 export function Photo01({ values }: Props) {
-  const text = values.headline || '2026 Meta hire to fire: All areas have minimum 10% cuts at Meta'
+  const text = values.headline || 'Is [Alexandr wang] the [Worst Hire in Meta] History?'
   const showSubtitle = values.showSubtitle === 'true'
   const height = values.tallRatio === 'true' ? 1920 : 1350
 
@@ -30,24 +54,15 @@ export function Photo01({ values }: Props) {
       {/* Headline + subtitle (헤드라인 아래) — 9:16일 때 하단 여백 2배 */}
       <div className="absolute flex flex-col" style={{ left: 40, right: 40, bottom: height === 1920 ? 200 : 100, gap: 20 }}>
         <p style={{
-          fontFamily: "'Rethink Sans', sans-serif",
-          fontWeight: 600,
-          fontSize: 100,
-          lineHeight: 1.4,
+          fontFamily: "'Libre Baskerville', serif",
+          fontWeight: 700,
+          fontSize: 96,
+          lineHeight: 1.45,
           color: 'white',
-          letterSpacing: '-3px',
           margin: 0,
           wordBreak: 'break-word',
         }}>
-          <span style={{
-            background: '#f44c4f',
-            padding: '2px 20px 6px 20px',
-            borderRadius: 24,
-            boxDecorationBreak: 'clone',
-            WebkitBoxDecorationBreak: 'clone',
-          } as React.CSSProperties}>
-            {text}
-          </span>
+          {renderBoxHighlight(text)}
         </p>
         {showSubtitle && (
           <p style={{
