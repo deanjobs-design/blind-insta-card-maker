@@ -24,7 +24,7 @@ export const TEMPLATES: TemplateConfig[] = [
     fields: [
       toggleField('tallRatio', '세로 1080×1920'),
       imageField('mainImage', '배경 사진'),
-      textareaField('headline', '헤드라인', '헤드라인 텍스트를 입력하세요'),
+      textareaField('headline', '헤드라인 ([텍스트]=박스 하이라이트)', '헤드라인 텍스트를 입력하세요'),
       toggleField('showSubtitle', '서브타이틀'),
       textareaField('subtitle', '서브타이틀 ([텍스트]=강조)', '서브타이틀을 입력하세요'),
     ],
