@@ -1,6 +1,7 @@
 'use client'
 import { TemplateConfig, FieldValues } from '@/lib/types'
 import { Button } from '@/components/ui/Button'
+import { SCALE_SUFFIX, MIN_SCALE, MAX_SCALE, SCALE_STEP, getScale } from '@/lib/textScale'
 
 interface Props {
   template: TemplateConfig | null
@@ -9,6 +10,47 @@ interface Props {
   onAddToSet: () => void
   onDownloadPng: () => void
   isDownloadingPng: boolean
+}
+
+// 글자 크기 조절 스테퍼
+function FontSizeControl({
+  fieldKey, values, onChange,
+}: { fieldKey: string; values: FieldValues; onChange: (k: string, v: string) => void }) {
+  const scaleKey = `${fieldKey}${SCALE_SUFFIX}`
+  const scale = getScale(values, fieldKey)
+  const setScale = (next: number) => {
+    const clamped = Math.min(MAX_SCALE, Math.max(MIN_SCALE, Math.round(next * 100) / 100))
+    onChange(scaleKey, String(clamped))
+  }
+  return (
+    <div className="flex items-center gap-1.5 mt-1">
+      <span className="text-xs text-gray-400">글자 크기</span>
+      <button
+        type="button"
+        onClick={() => setScale(scale - SCALE_STEP)}
+        className="w-6 h-6 rounded border border-gray-300 text-gray-600 text-sm leading-none hover:bg-gray-100"
+      >
+        −
+      </button>
+      <span className="text-xs text-gray-600 w-10 text-center tabular-nums">{Math.round(scale * 100)}%</span>
+      <button
+        type="button"
+        onClick={() => setScale(scale + SCALE_STEP)}
+        className="w-6 h-6 rounded border border-gray-300 text-gray-600 text-sm leading-none hover:bg-gray-100"
+      >
+        +
+      </button>
+      {scale !== 1 && (
+        <button
+          type="button"
+          onClick={() => setScale(1)}
+          className="text-xs text-gray-400 underline hover:text-gray-600 ml-1"
+        >
+          초기화
+        </button>
+      )}
+    </div>
+  )
 }
 
 export function InputPanel({ template, values, onChange, onAddToSet, onDownloadPng, isDownloadingPng }: Props) {
@@ -62,13 +104,16 @@ export function InputPanel({ template, values, onChange, onAddToSet, onDownloadP
             />
           )}
           {field.type === 'textarea' && (
-            <textarea
-              placeholder={field.placeholder}
-              value={values[field.key] ?? ''}
-              onChange={e => onChange(field.key, e.target.value)}
-              rows={4}
-              className="border border-gray-300 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+            <>
+              <textarea
+                placeholder={field.placeholder}
+                value={values[field.key] ?? ''}
+                onChange={e => onChange(field.key, e.target.value)}
+                rows={4}
+                className="border border-gray-300 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <FontSizeControl fieldKey={field.key} values={values} onChange={onChange} />
+            </>
           )}
           {field.type === 'image' && (
             <div className="flex flex-col gap-2">

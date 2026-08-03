@@ -1,4 +1,5 @@
 import { FieldValues } from '@/lib/types'
+import { scaledFont } from '@/lib/textScale'
 
 interface Props { values: FieldValues }
 
@@ -29,7 +30,7 @@ export function Text02({ values }: Props) {
           style={{
             fontFamily: "'Rethink Sans', sans-serif",
             fontWeight: 700,
-            fontSize: 140,
+            fontSize: scaledFont(140, values, 'quote'),
             lineHeight: 1.0,
             color: 'white',
             letterSpacing: '-4.2px',

@@ -1,4 +1,5 @@
 import { FieldValues } from '@/lib/types'
+import { scaledFont } from '@/lib/textScale'
 
 interface Props { values: FieldValues }
 
@@ -6,6 +7,7 @@ interface CommentEntry {
   logo?: string
   company: string
   text: string
+  fontSize: number
 }
 
 // 스레드 라인 — 엘보 PNG(144x144, #cccccc)를 72px 박스로 표시
@@ -89,7 +91,7 @@ function CommentRow({ entry, isFirst, isLast }: { entry: CommentEntry; isFirst: 
         <p style={{
           fontFamily: "'Rethink Sans', sans-serif",
           fontWeight: 400,
-          fontSize: 54,
+          fontSize: entry.fontSize,
           lineHeight: 1.22,
           color: 'white',
           letterSpacing: '-1.08px',
@@ -107,11 +109,11 @@ function CommentRow({ entry, isFirst, isLast }: { entry: CommentEntry; isFirst: 
 export function PostComment({ values }: Props) {
   const slots: CommentEntry[] = [
     // 댓글1 — 항상 표시
-    { logo: values.c1Logo, company: values.c1Company || 'Google', text: values.c1Text || 'Rotating out for cheaper cost employees' },
+    { logo: values.c1Logo, company: values.c1Company || 'Google', text: values.c1Text || 'Rotating out for cheaper cost employees', fontSize: scaledFont(54, values, 'c1Text') },
     // 댓글2~4 — 토글 ON일 때만
-    ...(values.showC2 === 'true' ? [{ logo: values.c2Logo, company: values.c2Company || 'Amazon', text: values.c2Text || "All the people in the comments mocking you are heartless. I've been laid off before. It was done over a teams call...My boss was cold. No emotions. No compassion.You're a good person for caring. You should reach out to your former colleagues...I'm sure they will appreciate it." }] : []),
-    ...(values.showC3 === 'true' ? [{ logo: values.c3Logo, company: values.c3Company || 'Meta', text: values.c3Text || 'umm...' }] : []),
-    ...(values.showC4 === 'true' ? [{ logo: values.c4Logo, company: values.c4Company || '', text: values.c4Text || '' }] : []),
+    ...(values.showC2 === 'true' ? [{ logo: values.c2Logo, company: values.c2Company || 'Amazon', text: values.c2Text || "All the people in the comments mocking you are heartless. I've been laid off before. It was done over a teams call...My boss was cold. No emotions. No compassion.You're a good person for caring. You should reach out to your former colleagues...I'm sure they will appreciate it.", fontSize: scaledFont(54, values, 'c2Text') }] : []),
+    ...(values.showC3 === 'true' ? [{ logo: values.c3Logo, company: values.c3Company || 'Meta', text: values.c3Text || 'umm...', fontSize: scaledFont(54, values, 'c3Text') }] : []),
+    ...(values.showC4 === 'true' ? [{ logo: values.c4Logo, company: values.c4Company || '', text: values.c4Text || '', fontSize: scaledFont(54, values, 'c4Text') }] : []),
   ]
 
   return (
