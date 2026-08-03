@@ -2,6 +2,7 @@
 import { TemplateConfig, FieldValues } from '@/lib/types'
 import { Button } from '@/components/ui/Button'
 import { SIZE_SUFFIX, MIN_PX, MAX_PX, resolveFont } from '@/lib/textScale'
+import { LOGO_SCALE_SUFFIX, MIN_LOGO_SCALE, MAX_LOGO_SCALE, LOGO_SCALE_STEP, getLogoScale } from '@/lib/logoScale'
 
 interface Props {
   template: TemplateConfig | null
@@ -63,6 +64,35 @@ function FontSizeControl({
         >
           초기화
         </button>
+      )}
+    </div>
+  )
+}
+
+// 원형 로고/썸네일 필드 (배경 이미지 제외) — 로고 크기 조절 대상
+const LOGO_FIELD_KEYS = new Set(['channelThumbnail', 'c1Logo', 'c2Logo', 'c3Logo', 'c4Logo'])
+
+// 로고 크기(원 안 비율 %) 조절
+function LogoSizeControl({
+  fieldKey, values, onChange,
+}: { fieldKey: string; values: FieldValues; onChange: (k: string, v: string) => void }) {
+  const scaleKey = `${fieldKey}${LOGO_SCALE_SUFFIX}`
+  const scale = getLogoScale(values, fieldKey)
+  const setScale = (n: number) => {
+    const clamped = Math.min(MAX_LOGO_SCALE, Math.max(MIN_LOGO_SCALE, Math.round(n)))
+    onChange(scaleKey, String(clamped))
+  }
+  return (
+    <div className="flex items-center gap-1.5 mt-1">
+      <span className="text-xs text-gray-400">로고 크기</span>
+      <button type="button" onClick={() => setScale(scale - LOGO_SCALE_STEP)}
+        className="w-6 h-6 rounded border border-gray-300 text-gray-600 text-sm leading-none hover:bg-gray-100">−</button>
+      <span className="text-xs text-gray-600 w-10 text-center tabular-nums">{scale}%</span>
+      <button type="button" onClick={() => setScale(scale + LOGO_SCALE_STEP)}
+        className="w-6 h-6 rounded border border-gray-300 text-gray-600 text-sm leading-none hover:bg-gray-100">+</button>
+      {scale !== 100 && (
+        <button type="button" onClick={() => onChange(scaleKey, '')}
+          className="text-xs text-gray-400 underline hover:text-gray-600 ml-1">초기화</button>
       )}
     </div>
   )
@@ -154,8 +184,12 @@ export function InputPanel({ template, values, onChange, onAddToSet, onDownloadP
                 <img
                   src={values[field.key]}
                   alt="preview"
-                  className="w-full h-24 object-cover rounded-lg border border-gray-200"
+                  className="w-full h-24 object-contain rounded-lg border border-gray-200 bg-gray-50"
                 />
+              )}
+              {/* 로고(원형 썸네일) 필드는 업로드 후 크기 조절 제공 */}
+              {LOGO_FIELD_KEYS.has(field.key) && values[field.key] && (
+                <LogoSizeControl fieldKey={field.key} values={values} onChange={onChange} />
               )}
             </div>
           )}

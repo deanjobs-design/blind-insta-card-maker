@@ -1,5 +1,6 @@
 import { FieldValues } from '@/lib/types'
 import { resolveFont } from '@/lib/textScale'
+import { LogoCircle } from '@/components/Templates/LogoCircle'
 
 interface Props { values: FieldValues }
 
@@ -37,11 +38,7 @@ export function PhotoComment({ values }: Props) {
         {/* Post header — 구분선 없음 */}
         <div style={{ padding: '24px 24px 16px 40px', background: 'white' }}>
           <div className="flex items-center" style={{ gap: 17, paddingTop: 16 }}>
-            <div style={{ width: 84, height: 84, borderRadius: 42, background: '#f0f0f0', overflow: 'hidden', flexShrink: 0 }}>
-              {values.channelThumbnail && (
-                <img src={values.channelThumbnail} alt="" className="w-full h-full object-cover" />
-              )}
-            </div>
+            <LogoCircle values={values} fieldKey="channelThumbnail" size={84} />
             <div>
               <p style={{
                 fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",

@@ -1,10 +1,11 @@
 import { FieldValues } from '@/lib/types'
 import { resolveFont } from '@/lib/textScale'
+import { LogoCircle } from '@/components/Templates/LogoCircle'
 
 interface Props { values: FieldValues }
 
 interface CommentEntry {
-  logo?: string
+  logoKey: string
   company: string
   text: string
   fontSize: number
@@ -24,7 +25,7 @@ const ELBOW_HSTROKE_Y = 49 // 표시 좌표에서 가로획 세로 위치(98*0.5
 const ROW_GAP = 40         // 댓글 사이 간격
 const CONTENT_TOP = 40     // 첫 댓글 상단 여백 (아이콘 위치용)
 
-function CommentRow({ entry, isFirst, isLast }: { entry: CommentEntry; isFirst: boolean; isLast: boolean }) {
+function CommentRow({ entry, values, isFirst, isLast }: { entry: CommentEntry; values: FieldValues; isFirst: boolean; isLast: boolean }) {
   return (
     <div style={{
       display: 'flex',
@@ -65,18 +66,7 @@ function CommentRow({ entry, isFirst, isLast }: { entry: CommentEntry; isFirst: 
         {/* Header */}
         <div style={{ height: HEADER_H, display: 'flex', alignItems: 'center' }}>
           <div style={{ display: 'flex', gap: 16, alignItems: 'center' }}>
-            <div style={{
-              width: 56, height: 56, borderRadius: 36,
-              background: 'rgba(163,163,163,0.3)',
-              border: '1.4px solid rgba(163,163,163,0.3)',
-              overflow: 'hidden', flexShrink: 0,
-            }}>
-              <img
-                src={entry.logo || '/assets/comment_thumbnail.png'}
-                alt=""
-                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-              />
-            </div>
+            <LogoCircle values={values} fieldKey={entry.logoKey} size={56} fallbackSrc="/assets/comment_thumbnail.png" />
             <span style={{
               fontFamily: "'Rethink Sans', sans-serif",
               fontWeight: 500,
@@ -110,11 +100,11 @@ function CommentRow({ entry, isFirst, isLast }: { entry: CommentEntry; isFirst: 
 export function PostComment({ values }: Props) {
   const slots: CommentEntry[] = [
     // 댓글1 — 항상 표시
-    { logo: values.c1Logo, company: values.c1Company || 'Google', text: values.c1Text || 'Rotating out for cheaper cost employees', fontSize: resolveFont(54, values, 'c1Text'), companyFontSize: resolveFont(36, values, 'c1Company') },
+    { logoKey: 'c1Logo', company: values.c1Company || 'Google', text: values.c1Text || 'Rotating out for cheaper cost employees', fontSize: resolveFont(54, values, 'c1Text'), companyFontSize: resolveFont(36, values, 'c1Company') },
     // 댓글2~4 — 토글 ON일 때만
-    ...(values.showC2 === 'true' ? [{ logo: values.c2Logo, company: values.c2Company || 'Amazon', text: values.c2Text || "All the people in the comments mocking you are heartless. I've been laid off before. It was done over a teams call...My boss was cold. No emotions. No compassion.You're a good person for caring. You should reach out to your former colleagues...I'm sure they will appreciate it.", fontSize: resolveFont(54, values, 'c2Text'), companyFontSize: resolveFont(36, values, 'c2Company') }] : []),
-    ...(values.showC3 === 'true' ? [{ logo: values.c3Logo, company: values.c3Company || 'Meta', text: values.c3Text || 'umm...', fontSize: resolveFont(54, values, 'c3Text'), companyFontSize: resolveFont(36, values, 'c3Company') }] : []),
-    ...(values.showC4 === 'true' ? [{ logo: values.c4Logo, company: values.c4Company || '', text: values.c4Text || '', fontSize: resolveFont(54, values, 'c4Text'), companyFontSize: resolveFont(36, values, 'c4Company') }] : []),
+    ...(values.showC2 === 'true' ? [{ logoKey: 'c2Logo', company: values.c2Company || 'Amazon', text: values.c2Text || "All the people in the comments mocking you are heartless. I've been laid off before. It was done over a teams call...My boss was cold. No emotions. No compassion.You're a good person for caring. You should reach out to your former colleagues...I'm sure they will appreciate it.", fontSize: resolveFont(54, values, 'c2Text'), companyFontSize: resolveFont(36, values, 'c2Company') }] : []),
+    ...(values.showC3 === 'true' ? [{ logoKey: 'c3Logo', company: values.c3Company || 'Meta', text: values.c3Text || 'umm...', fontSize: resolveFont(54, values, 'c3Text'), companyFontSize: resolveFont(36, values, 'c3Company') }] : []),
+    ...(values.showC4 === 'true' ? [{ logoKey: 'c4Logo', company: values.c4Company || '', text: values.c4Text || '', fontSize: resolveFont(54, values, 'c4Text'), companyFontSize: resolveFont(36, values, 'c4Company') }] : []),
   ]
 
   return (
@@ -126,7 +116,7 @@ export function PostComment({ values }: Props) {
         overflow: 'hidden',
       }}>
         {slots.map((s, i) => (
-          <CommentRow key={i} entry={s} isFirst={i === 0} isLast={i === slots.length - 1} />
+          <CommentRow key={i} entry={s} values={values} isFirst={i === 0} isLast={i === slots.length - 1} />
         ))}
       </div>
 

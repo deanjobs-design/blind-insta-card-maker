@@ -1,5 +1,6 @@
 import { FieldValues } from '@/lib/types'
 import { resolveFont } from '@/lib/textScale'
+import { LogoCircle } from '@/components/Templates/LogoCircle'
 
 interface Props { values: FieldValues }
 
@@ -9,11 +10,7 @@ export function Post({ values }: Props) {
       <div className="absolute" style={{ left: 60, right: 60, top: 80, bottom: 110 }}>
         {/* Company header — 52pt */}
         <div className="flex items-center" style={{ gap: 16, marginBottom: 32 }}>
-          <div style={{ width: 72, height: 72, borderRadius: 36, background: 'rgba(163,163,163,0.3)', overflow: 'hidden', flexShrink: 0 }}>
-            {values.channelThumbnail && (
-              <img src={values.channelThumbnail} alt="" className="w-full h-full object-cover" />
-            )}
-          </div>
+          <LogoCircle values={values} fieldKey="channelThumbnail" size={72} />
           <div>
             <span style={{
               fontFamily: "'Rethink Sans', sans-serif",
