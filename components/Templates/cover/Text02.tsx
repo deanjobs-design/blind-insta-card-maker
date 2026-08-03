@@ -57,14 +57,14 @@ export function Text02({ values }: Props) {
           <div>
             <p style={{
               fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
-              fontWeight: 600, fontSize: 38, color: 'white',
+              fontWeight: 600, fontSize: resolveFont(38, values, 'channelName'), color: 'white',
               letterSpacing: '0.76px', margin: 0, lineHeight: 1.2,
             }}>
               {values.channelName || 'Tech Industry'}
             </p>
             <p style={{
               fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
-              fontWeight: 400, fontSize: 30, color: '#bec1c5',
+              fontWeight: 400, fontSize: resolveFont(30, values, 'occupation'), color: '#bec1c5',
               letterSpacing: '0.6px', margin: 0,
             }}>
               {values.occupation || 'Ex-Amazon'}

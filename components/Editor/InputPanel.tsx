@@ -110,13 +110,18 @@ export function InputPanel({ template, values, onChange, onAddToSet, onDownloadP
         <div key={field.key} className="flex flex-col gap-1">
           <label className="text-sm font-medium text-gray-700">{field.label}</label>
           {field.type === 'text' && (
-            <input
-              type="text"
-              placeholder={field.placeholder}
-              value={values[field.key] ?? ''}
-              onChange={e => onChange(field.key, e.target.value)}
-              className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+            <>
+              <input
+                type="text"
+                placeholder={field.placeholder}
+                value={values[field.key] ?? ''}
+                onChange={e => onChange(field.key, e.target.value)}
+                className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              {field.baseFontSize != null && (
+                <FontSizeControl fieldKey={field.key} base={field.baseFontSize} values={values} onChange={onChange} />
+              )}
+            </>
           )}
           {field.type === 'textarea' && (
             <>

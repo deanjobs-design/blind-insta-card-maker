@@ -45,14 +45,14 @@ export function PhotoComment({ values }: Props) {
             <div>
               <p style={{
                 fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
-                fontWeight: 600, fontSize: 29, color: '#222',
+                fontWeight: 600, fontSize: resolveFont(29, values, 'channelName'), color: '#222',
                 letterSpacing: '0.58px', margin: 0, lineHeight: 1.3,
               }}>
                 {values.channelName || 'Tech Industry'}
               </p>
               <p style={{
                 fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
-                fontWeight: 400, fontSize: 25, color: '#54545a', margin: 0,
+                fontWeight: 400, fontSize: resolveFont(25, values, 'timestamp'), color: '#54545a', margin: 0,
               }}>
                 {values.timestamp || 'Ex-Amazon'}
               </p>

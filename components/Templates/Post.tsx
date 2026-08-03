@@ -18,7 +18,7 @@ export function Post({ values }: Props) {
             <span style={{
               fontFamily: "'Rethink Sans', sans-serif",
               fontWeight: 400,
-              fontSize: 52,
+              fontSize: resolveFont(52, values, 'channelName'),
               color: '#e9e9e9',
               lineHeight: 1.2,
             }}>
@@ -27,7 +27,7 @@ export function Post({ values }: Props) {
             <span style={{
               fontFamily: "'Rethink Sans', sans-serif",
               fontWeight: 400,
-              fontSize: 52,
+              fontSize: resolveFont(52, values, 'channelName'),
               color: '#c1c2c3',
               lineHeight: 1.2,
               marginLeft: 8,
