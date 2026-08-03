@@ -1,7 +1,7 @@
 'use client'
 import { TemplateConfig, FieldValues } from '@/lib/types'
 import { Button } from '@/components/ui/Button'
-import { SCALE_SUFFIX, MIN_SCALE, MAX_SCALE, SCALE_STEP, getScale } from '@/lib/textScale'
+import { SIZE_SUFFIX, MIN_PX, MAX_PX, resolveFont } from '@/lib/textScale'
 
 interface Props {
   template: TemplateConfig | null
@@ -12,38 +12,53 @@ interface Props {
   isDownloadingPng: boolean
 }
 
-// 글자 크기 조절 스테퍼
+// 글자 크기(px) 직접 조절/입력
 function FontSizeControl({
-  fieldKey, values, onChange,
-}: { fieldKey: string; values: FieldValues; onChange: (k: string, v: string) => void }) {
-  const scaleKey = `${fieldKey}${SCALE_SUFFIX}`
-  const scale = getScale(values, fieldKey)
-  const setScale = (next: number) => {
-    const clamped = Math.min(MAX_SCALE, Math.max(MIN_SCALE, Math.round(next * 100) / 100))
-    onChange(scaleKey, String(clamped))
+  fieldKey, base, values, onChange,
+}: { fieldKey: string; base: number; values: FieldValues; onChange: (k: string, v: string) => void }) {
+  const sizeKey = `${fieldKey}${SIZE_SUFFIX}`
+  const current = resolveFont(base, values, fieldKey)
+  const raw = values[sizeKey]
+  const isCustom = raw != null && raw !== ''
+  const setPx = (n: number) => {
+    const clamped = Math.min(MAX_PX, Math.max(MIN_PX, Math.round(n)))
+    onChange(sizeKey, String(clamped))
   }
   return (
     <div className="flex items-center gap-1.5 mt-1">
       <span className="text-xs text-gray-400">글자 크기</span>
       <button
         type="button"
-        onClick={() => setScale(scale - SCALE_STEP)}
+        onClick={() => setPx(current - 1)}
         className="w-6 h-6 rounded border border-gray-300 text-gray-600 text-sm leading-none hover:bg-gray-100"
       >
         −
       </button>
-      <span className="text-xs text-gray-600 w-10 text-center tabular-nums">{Math.round(scale * 100)}%</span>
+      <div className="flex items-center border border-gray-300 rounded px-1.5 h-6">
+        <input
+          type="number"
+          value={current}
+          onChange={e => {
+            const v = e.target.value
+            if (v === '') { onChange(sizeKey, ''); return }
+            const n = parseInt(v, 10)
+            if (isFinite(n)) setPx(n)
+          }}
+          className="w-9 text-xs text-gray-700 text-center tabular-nums focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+        />
+        <span className="text-xs text-gray-400">px</span>
+      </div>
       <button
         type="button"
-        onClick={() => setScale(scale + SCALE_STEP)}
+        onClick={() => setPx(current + 1)}
         className="w-6 h-6 rounded border border-gray-300 text-gray-600 text-sm leading-none hover:bg-gray-100"
       >
         +
       </button>
-      {scale !== 1 && (
+      {isCustom && (
         <button
           type="button"
-          onClick={() => setScale(1)}
+          onClick={() => onChange(sizeKey, '')}
           className="text-xs text-gray-400 underline hover:text-gray-600 ml-1"
         >
           초기화
@@ -112,7 +127,7 @@ export function InputPanel({ template, values, onChange, onAddToSet, onDownloadP
                 rows={4}
                 className="border border-gray-300 rounded-lg px-3 py-2 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-              <FontSizeControl fieldKey={field.key} values={values} onChange={onChange} />
+              <FontSizeControl fieldKey={field.key} base={field.baseFontSize ?? 40} values={values} onChange={onChange} />
             </>
           )}
           {field.type === 'image' && (

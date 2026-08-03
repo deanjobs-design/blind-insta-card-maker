@@ -1,5 +1,5 @@
 import { FieldValues } from '@/lib/types'
-import { scaledFont } from '@/lib/textScale'
+import { resolveFont } from '@/lib/textScale'
 
 interface Props { values: FieldValues }
 
@@ -37,7 +37,7 @@ export function PhotoText02({ values }: Props) {
           <p style={{
             fontFamily: "'Rethink Sans', sans-serif",
             fontWeight: 600,
-            fontSize: scaledFont(110, values, 'headline'),
+            fontSize: resolveFont(110, values, 'headline'),
             lineHeight: 1,
             color: 'white',
             letterSpacing: '-2.2px',
@@ -55,7 +55,7 @@ export function PhotoText02({ values }: Props) {
             <p style={{
               fontFamily: "'Rethink Sans', sans-serif",
               fontWeight: 400,
-              fontSize: scaledFont(32, values, 'body'),
+              fontSize: resolveFont(32, values, 'body'),
               lineHeight: 1.2,
               color: 'white',
               letterSpacing: '-0.32px',

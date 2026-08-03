@@ -1,5 +1,5 @@
 import { FieldValues } from '@/lib/types'
-import { scaledFont } from '@/lib/textScale'
+import { resolveFont } from '@/lib/textScale'
 
 interface Props { values: FieldValues }
 
@@ -64,7 +64,7 @@ export function PhotoComment({ values }: Props) {
         <div style={{ padding: '4px 40px 12px 40px', background: 'white' }}>
           <p style={{
             fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
-            fontWeight: 600, fontSize: scaledFont(46, values, 'postBody'), lineHeight: 1.22,
+            fontWeight: 600, fontSize: resolveFont(46, values, 'postBody'), lineHeight: 1.22,
             color: '#222', letterSpacing: '0.46px', margin: 0,
             wordBreak: 'break-word',
           }}>
@@ -76,7 +76,7 @@ export function PhotoComment({ values }: Props) {
         <div style={{ padding: '0 40px 24px 40px', background: 'white' }}>
           <p style={{
             fontFamily: "'Pretendard', 'Rethink Sans', sans-serif",
-            fontWeight: 400, fontSize: scaledFont(32, values, 'subText'), lineHeight: 1.4,
+            fontWeight: 400, fontSize: resolveFont(32, values, 'subText'), lineHeight: 1.4,
             color: '#54545a', margin: 0, wordBreak: 'break-word',
           }}>
             {values.subText || 'All of the sudden everyone has a dentist appointment, or they got sick, or they have some other random thing, hahah.'}

@@ -1,6 +1,6 @@
 import { FieldValues } from '@/lib/types'
 import { renderBolder } from '@/lib/renderHighlight'
-import { scaledFont } from '@/lib/textScale'
+import { resolveFont } from '@/lib/textScale'
 
 interface Props { values: FieldValues }
 
@@ -57,7 +57,7 @@ export function Photo01({ values }: Props) {
         <p style={{
           fontFamily: "'Libre Baskerville', serif",
           fontWeight: 700,
-          fontSize: scaledFont(96, values, 'headline'),
+          fontSize: resolveFont(96, values, 'headline'),
           lineHeight: 1.3,
           color: 'white',
           margin: 0,
@@ -69,7 +69,7 @@ export function Photo01({ values }: Props) {
           <p style={{
             fontFamily: "'Rethink Sans', sans-serif",
             fontWeight: 400,
-            fontSize: scaledFont(40, values, 'subtitle'),
+            fontSize: resolveFont(40, values, 'subtitle'),
             lineHeight: 1.3,
             color: '#DDDDDD',
             margin: 0,

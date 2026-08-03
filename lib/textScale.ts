@@ -1,19 +1,21 @@
 import { FieldValues } from './types'
 
-// 필드별 글자 크기 배율 저장 키 접미사
-export const SCALE_SUFFIX = '__scale'
+// 필드별 글자 크기(px) 저장 키 접미사
+export const SIZE_SUFFIX = '__px'
 
-export const MIN_SCALE = 0.5
-export const MAX_SCALE = 2.0
-export const SCALE_STEP = 0.1
+export const MIN_PX = 10
+export const MAX_PX = 400
 
-export function getScale(values: FieldValues, key: string): number {
-  const s = parseFloat(values[`${key}${SCALE_SUFFIX}`] || '1')
-  if (!isFinite(s) || s <= 0) return 1
-  return Math.min(MAX_SCALE, Math.max(MIN_SCALE, s))
+// 저장된 px 값이 있으면 그 값을, 없으면 base(기본 px)를 반환
+export function resolveFont(base: number, values: FieldValues, key: string): number {
+  const raw = values[`${key}${SIZE_SUFFIX}`]
+  if (raw == null || raw === '') return base
+  const n = parseInt(raw, 10)
+  if (!isFinite(n)) return base
+  return Math.min(MAX_PX, Math.max(MIN_PX, n))
 }
 
-// base 크기에 배율 적용
-export function scaledFont(base: number, values: FieldValues, key: string): number {
-  return Math.round(base * getScale(values, key))
+// 해당 필드의 현재 표시 px (컨트롤 UI에서 사용)
+export function currentFont(base: number, values: FieldValues, key: string): number {
+  return resolveFont(base, values, key)
 }

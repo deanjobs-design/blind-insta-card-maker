@@ -12,6 +12,7 @@ export interface TemplateField {
   placeholder?: string
   required?: boolean
   options?: SelectOption[]   // type==='select'
+  baseFontSize?: number      // 이 필드 텍스트의 기본 px (크기 조절 UI 기준값)
 }
 
 export interface TemplateConfig {

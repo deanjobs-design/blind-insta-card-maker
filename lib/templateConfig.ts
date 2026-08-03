@@ -3,8 +3,8 @@ import { TemplateConfig, TemplateField, SelectOption } from './types'
 const textField = (key: string, label: string, placeholder = ''): TemplateField => ({
   key, label, type: 'text', placeholder,
 })
-const textareaField = (key: string, label: string, placeholder = ''): TemplateField => ({
-  key, label, type: 'textarea', placeholder,
+const textareaField = (key: string, label: string, placeholder = '', baseFontSize?: number): TemplateField => ({
+  key, label, type: 'textarea', placeholder, baseFontSize,
 })
 const imageField = (key: string, label: string): TemplateField => ({
   key, label, type: 'image', required: false,
@@ -24,9 +24,9 @@ export const TEMPLATES: TemplateConfig[] = [
     fields: [
       toggleField('tallRatio', '세로 1080×1920'),
       imageField('mainImage', '배경 사진'),
-      textareaField('headline', '헤드라인 ([텍스트]=박스 하이라이트)', '헤드라인 텍스트를 입력하세요'),
+      textareaField('headline', '헤드라인 ([텍스트]=박스 하이라이트)', '헤드라인 텍스트를 입력하세요', 96),
       toggleField('showSubtitle', '서브타이틀'),
-      textareaField('subtitle', '서브타이틀 ([텍스트]=강조)', '서브타이틀을 입력하세요'),
+      textareaField('subtitle', '서브타이틀 ([텍스트]=강조)', '서브타이틀을 입력하세요', 40),
     ],
   },
   {
@@ -36,9 +36,9 @@ export const TEMPLATES: TemplateConfig[] = [
     fields: [
       toggleField('tallRatio', '세로 1080×1920'),
       imageField('mainImage', '배경 사진'),
-      textareaField('headline', '헤드라인 ([텍스트] = 강조)', '헤드라인 텍스트를 입력하세요'),
+      textareaField('headline', '헤드라인 ([텍스트] = 강조)', '헤드라인 텍스트를 입력하세요', 110),
       toggleField('showSubtitle', '서브타이틀'),
-      textareaField('subtitle', '서브타이틀 ([텍스트]=강조)', '서브타이틀을 입력하세요'),
+      textareaField('subtitle', '서브타이틀 ([텍스트]=강조)', '서브타이틀을 입력하세요', 40),
     ],
   },
   {
@@ -46,7 +46,7 @@ export const TEMPLATES: TemplateConfig[] = [
     name: '사진+텍스트형 A',
     section: 'cover',
     fields: [
-      textareaField('title', '타이틀 ([텍스트] = 하이라이트)', '[하이라이트할 부분]을 대괄호로 감싸세요'),
+      textareaField('title', '타이틀 ([텍스트] = 하이라이트)', '[하이라이트할 부분]을 대괄호로 감싸세요', 110),
       imageField('sectionImage', '하단 이미지'),
     ],
   },
@@ -56,9 +56,9 @@ export const TEMPLATES: TemplateConfig[] = [
     section: 'cover',
     fields: [
       imageField('mainImage', '배경 사진'),
-      textareaField('headline', '헤드라인', '헤드라인 텍스트'),
+      textareaField('headline', '헤드라인', '헤드라인 텍스트', 110),
       toggleField('showBody', '본문'),
-      textareaField('body', '본문 텍스트', '본문 텍스트'),
+      textareaField('body', '본문 텍스트', '본문 텍스트', 32),
     ],
   },
   {
@@ -66,7 +66,7 @@ export const TEMPLATES: TemplateConfig[] = [
     name: '텍스트형 A',
     section: 'cover',
     fields: [
-      textareaField('announcement', '본문 텍스트 ([텍스트] = 강조)', '공지/발표 텍스트를 입력하세요'),
+      textareaField('announcement', '본문 텍스트 ([텍스트] = 강조)', '공지/발표 텍스트를 입력하세요', 145),
     ],
   },
   {
@@ -74,7 +74,7 @@ export const TEMPLATES: TemplateConfig[] = [
     name: '텍스트형 B (인용구)',
     section: 'cover',
     fields: [
-      textareaField('quote', '인용구', '"큰따옴표 안의 텍스트"'),
+      textareaField('quote', '인용구', '"큰따옴표 안의 텍스트"', 140),
       toggleField('showChannelInfo', '채널 정보 표시'),
       textField('channelName', '채널명', '채널 이름'),
       textField('occupation', '직책/소속', '직책 또는 소속'),
@@ -91,8 +91,8 @@ export const TEMPLATES: TemplateConfig[] = [
       imageField('channelThumbnail', '채널 로고'),
       textField('channelName', '채널명'),
       textField('timestamp', '회사명', 'Ex-Amazon'),
-      textareaField('postBody', '게시물 본문', '게시물 내용'),
-      textareaField('subText', '서브 텍스트', '추가 설명 (선택사항)'),
+      textareaField('postBody', '게시물 본문', '게시물 내용', 46),
+      textareaField('subText', '서브 텍스트', '추가 설명 (선택사항)', 32),
     ],
   },
   {
@@ -102,7 +102,7 @@ export const TEMPLATES: TemplateConfig[] = [
     fields: [
       textField('channelName', '회사명', 'Amazon'),
       imageField('channelThumbnail', '회사 썸네일'),
-      textareaField('body', '게시물 본문', '게시물 내용을 입력하세요'),
+      textareaField('body', '게시물 본문', '게시물 내용을 입력하세요', 54),
     ],
   },
   {
@@ -113,22 +113,22 @@ export const TEMPLATES: TemplateConfig[] = [
       // 댓글 1 (항상 표시)
       imageField('c1Logo', '댓글1 로고'),
       textField('c1Company', '댓글1 회사명', 'Google'),
-      textareaField('c1Text', '댓글1 내용', '댓글 내용을 입력하세요'),
+      textareaField('c1Text', '댓글1 내용', '댓글 내용을 입력하세요', 54),
       // 댓글 2 (토글)
       toggleField('showC2', '댓글2 표시'),
       imageField('c2Logo', '댓글2 로고'),
       textField('c2Company', '댓글2 회사명', 'Amazon'),
-      textareaField('c2Text', '댓글2 내용', '댓글 내용을 입력하세요'),
+      textareaField('c2Text', '댓글2 내용', '댓글 내용을 입력하세요', 54),
       // 댓글 3 (토글)
       toggleField('showC3', '댓글3 표시'),
       imageField('c3Logo', '댓글3 로고'),
       textField('c3Company', '댓글3 회사명', 'Meta'),
-      textareaField('c3Text', '댓글3 내용', '댓글 내용을 입력하세요'),
+      textareaField('c3Text', '댓글3 내용', '댓글 내용을 입력하세요', 54),
       // 댓글 4 (토글)
       toggleField('showC4', '댓글4 표시'),
       imageField('c4Logo', '댓글4 로고'),
       textField('c4Company', '댓글4 회사명'),
-      textareaField('c4Text', '댓글4 내용'),
+      textareaField('c4Text', '댓글4 내용', '', 54),
     ],
   },
   {
